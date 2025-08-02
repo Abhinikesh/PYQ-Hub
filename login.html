@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="loginsignup.css">
+</head>
+<body>
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <input type="checkbox" id="darkModeToggle" hidden>
+    <label for="darkModeToggle" class="emoji-toggle">🌞</label>
+  </div>
+
+  <!-- Login Card (same style as sign up) -->
+  <div class="form_area">
+    <p class="title">LOGIN</p>
+    <form id="login-form">
+      <div class="form_group">
+        <label class="sub_title" for="login-email">Email</label>
+        <input placeholder="Enter your email" id="login-email" class="form_style" type="email" required>
+      </div>
+      <div class="form_group">
+        <label class="sub_title" for="login-password">Password</label>
+        <input placeholder="Enter your password" id="login-password" class="form_style" type="password" required>
+      </div>
+      <button type="submit" class="btn">LOGIN</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html" class="link">Sign Up here</a></p>
+  </div>
+
+  <script>
+    // Dark Mode Emoji Toggle
+    const toggle = document.getElementById("darkModeToggle");
+    const emojiToggle = document.querySelector(".emoji-toggle");
+
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark");
+      emojiToggle.textContent = document.body.classList.contains("dark") ? "🌙" : "🌞";
+    });
+  </script>
+  <script type="module" src="firebase-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase Auth Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .success { color: green; }
+    .error { color: red; }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Firebase Authentication Test</h1>
+  
+  <div class="test-section">
+    <h2>Test Results</h2>
+    <div id="test-results">
+      <p>Testing Firebase configuration...</p>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Quick Test</h2>
+    <button onclick="testFirebase()">Test Firebase Connection</button>
+    <button onclick="window.location.href='login.html'">Go to Login</button>
+    <button onclick="window.location.href='signup.html'">Go to Signup</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyClrHzNNcLGV8YgSseR41e18w_rRHxXQtg",
+      authDomain: "pyq-d7579.firebaseapp.com",
+      projectId: "pyq-d7579",
+      storageBucket: "pyq-d7579.firebasestorage.app",
+      messagingSenderId: "440851411467",
+      appId: "1:440851411467:web:ad812e46faa5edaf9d4d0e",
+      measurementId: "G-RXNZRYP6NM"
+    };
+
+    try {
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      
+      document.getElementById('test-results').innerHTML = `
+        <p class="success">✅ Firebase initialized successfully!</p>
+        <p>Auth domain: ${firebaseConfig.authDomain}</p>
+        <p>Project ID: ${firebaseConfig.projectId}</p>
+      `;
+      
+      window.testFirebase = function() {
+        alert('Firebase is working correctly! You can now test login and signup.');
+      };
+      
+    } catch (error) {
+      document.getElementById('test-results').innerHTML = `
+        <p class="error">❌ Firebase initialization failed: ${error.message}</p>
+      `;
+    }
+  </script>
+</body>
+</html>

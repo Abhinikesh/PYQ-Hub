@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login / Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="loginsignup.css">
+</head>
+<body>
+  <div class="theme-toggle">
+    <input type="checkbox" id="darkModeToggle">
+    <label for="darkModeToggle">🌙</label>
+  </div>
+
+  
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <!-- Sign Up Form -->
+          <div class="flip-card-front">
+            <div class="form_area">
+              <p class="title">SIGN UP</p>
+              <form id="signup-form">
+                <div class="form_group">
+                  <label class="sub_title" for="name">Name</label>
+                  <input placeholder="Enter your full name" class="form_style" type="text" id="name" required>
+                </div>
+                <div class="form_group">
+                  <label class="sub_title" for="email">Email</label>
+                  <input placeholder="Enter your email" id="signup-email" class="form_style" type="email" required>
+                </div>
+                <div class="form_group">
+                  <label class="sub_title" for="password">Password</label>
+                  <input placeholder="Enter your password" id="signup-password" class="form_style" type="password" required>
+                </div>
+                <button type="submit" class="btn">SIGN UP</button>
+              </form>
+              <p>Already have an account? <a href="login.html" class="link">Login here</a></p>
+
+            </div>
+          </div>
+
+          <!-- Login Form -->
+          <div class="flip-card-back">
+            <div class="form_area">
+              <p class="title">LOGIN</p>
+              <form id="login-form">
+                <div class="form_group">
+                  <label class="sub_title" for="login-email">Email</label>
+                  <input placeholder="Enter your email" id="login-email" class="form_style" type="email" required>
+                </div>
+                <div class="form_group">
+                  <label class="sub_title" for="login-password">Password</label>
+                  <input placeholder="Enter your password" id="login-password" class="form_style" type="password" required>
+                </div>
+                <button type="submit" class="btn">LOGIN</button>
+              </form>
+              <p>Don't have an account? <a href="#" class="link" onclick="document.getElementById('flipToggle').click()">Sign Up here</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dark Mode Toggle
+    const toggle = document.getElementById("darkModeToggle");
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark");
+    });
+  </script>
+  <script type="module" src="firebase-login.js"></script>
+</body>
+</html>

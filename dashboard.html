@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PYQ Hub - Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    /* Dashboard specific styles */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #1e293b;
+      color: white;
+      padding: 20px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #334155;
+    }
+
+    .sidebar-header .logo-icon {
+      font-size: 2rem;
+      color: #3b82f6;
+    }
+
+    .sidebar-header span {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-menu {
+      list-style: none;
+      padding: 0;
+    }
+
+    .nav-menu li {
+      margin-bottom: 10px;
+    }
+
+    .nav-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      color: #cbd5e1;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .nav-menu a i {
+      font-size: 1.2rem;
+    }
+
+    .main-content {
+      flex: 1;
+      margin-left: 250px;
+      padding: 20px;
+      background: #f8fafc;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-icon.blue { background: #dbeafe; color: #1d4ed8; }
+    .stat-icon.green { background: #dcfce7; color: #15803d; }
+    .stat-icon.purple { background: #f3e8ff; color: #7c3aed; }
+    .stat-icon.orange { background: #fed7aa; color: #ea580c; }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .content-sections {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .section-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .section-header {
+      padding: 20px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .section-content {
+      padding: 20px;
+    }
+
+    .recent-uploads {
+      list-style: none;
+      padding: 0;
+    }
+
+    .upload-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .upload-item:last-child {
+      border-bottom: none;
+    }
+
+    .upload-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .upload-info h4 {
+      margin: 0 0 4px 0;
+      font-size: 0.9rem;
+      color: #1e293b;
+    }
+
+    .upload-info p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .activity-info h4 {
+      margin: 0 0 4px 0;
+      font-size: 0.9rem;
+      color: #1e293b;
+    }
+
+    .activity-info p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #64748b;
+      transition: all 0.3s ease;
+    }
+
+    .action-btn:hover {
+      background: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+    }
+
+    .action-icon {
+      font-size: 1.5rem;
+    }
+
+    .action-text {
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* Dark mode styles */
+    .dark-mode .sidebar {
+      background: #0f172a;
+    }
+
+    .dark-mode .main-content {
+      background: #0f172a;
+    }
+
+    .dark-mode .dashboard-header,
+    .dark-mode .stat-card,
+    .dark-mode .section-card {
+      background: #1e293b;
+      color: #e2e8f0;
+    }
+
+    .dark-mode .stat-number {
+      color: #e2e8f0;
+    }
+
+    .dark-mode .section-title {
+      color: #e2e8f0;
+    }
+
+    .dark-mode .upload-info h4,
+    .dark-mode .activity-info h4 {
+      color: #e2e8f0;
+    }
+
+    .dark-mode .action-btn {
+      background: #1e293b;
+      border-color: #334155;
+      color: #cbd5e1;
+    }
+
+    .dark-mode .action-btn:hover {
+      background: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .content-sections {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+             }
+     }
+
+     /* Upload Modal Styles */
+     .modal-overlay {
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background: rgba(0, 0, 0, 0.5);
+       display: none;
+       justify-content: center;
+       align-items: center;
+       z-index: 1000;
+     }
+
+     .modal-overlay.show {
+       display: flex;
+     }
+
+     .upload-modal {
+       background: white;
+       border-radius: 12px;
+       padding: 30px;
+       width: 90%;
+       max-width: 600px;
+       max-height: 90vh;
+       overflow-y: auto;
+       position: relative;
+     }
+
+     .modal-header {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       margin-bottom: 20px;
+       padding-bottom: 15px;
+       border-bottom: 1px solid #e2e8f0;
+     }
+
+     .modal-title {
+       font-size: 1.5rem;
+       font-weight: 600;
+       color: #1e293b;
+     }
+
+     .close-btn {
+       background: none;
+       border: none;
+       font-size: 1.5rem;
+       cursor: pointer;
+       color: #64748b;
+       padding: 5px;
+       border-radius: 50%;
+       transition: all 0.3s ease;
+     }
+
+     .close-btn:hover {
+       background: #f1f5f9;
+       color: #1e293b;
+     }
+
+     .form-group {
+       margin-bottom: 20px;
+     }
+
+     .form-label {
+       display: block;
+       margin-bottom: 8px;
+       font-weight: 500;
+       color: #374151;
+     }
+
+     .form-input {
+       width: 100%;
+       padding: 12px 16px;
+       border: 2px solid #e5e7eb;
+       border-radius: 8px;
+       font-size: 1rem;
+       transition: border-color 0.3s ease;
+       box-sizing: border-box;
+     }
+
+     .form-input:focus {
+       outline: none;
+       border-color: #3b82f6;
+     }
+
+     .form-textarea {
+       resize: vertical;
+       min-height: 100px;
+     }
+
+     .form-select {
+       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+       background-position: right 12px center;
+       background-repeat: no-repeat;
+       background-size: 16px;
+       padding-right: 40px;
+     }
+
+     .file-upload {
+       border: 2px dashed #d1d5db;
+       border-radius: 8px;
+       padding: 20px;
+       text-align: center;
+       cursor: pointer;
+       transition: all 0.3s ease;
+     }
+
+     .file-upload:hover {
+       border-color: #3b82f6;
+       background: #f8fafc;
+     }
+
+     .file-upload.dragover {
+       border-color: #3b82f6;
+       background: #eff6ff;
+     }
+
+     .file-input {
+       display: none;
+     }
+
+     .file-info {
+       margin-top: 10px;
+       font-size: 0.9rem;
+       color: #6b7280;
+     }
+
+     .modal-actions {
+       display: flex;
+       gap: 12px;
+       justify-content: flex-end;
+       margin-top: 30px;
+       padding-top: 20px;
+       border-top: 1px solid #e2e8f0;
+     }
+
+     .btn-cancel {
+       padding: 12px 24px;
+       background: white;
+       border: 2px solid #d1d5db;
+       border-radius: 8px;
+       color: #374151;
+       font-weight: 500;
+       cursor: pointer;
+       transition: all 0.3s ease;
+     }
+
+     .btn-cancel:hover {
+       background: #f9fafb;
+       border-color: #9ca3af;
+     }
+
+     .btn-upload {
+       padding: 12px 24px;
+       background: #1e293b;
+       border: none;
+       border-radius: 8px;
+       color: white;
+       font-weight: 500;
+       cursor: pointer;
+       transition: all 0.3s ease;
+     }
+
+     .btn-upload:hover {
+       background: #374151;
+     }
+
+     .btn-upload:disabled {
+       background: #9ca3af;
+       cursor: not-allowed;
+     }
+
+     .loading {
+       display: none;
+       align-items: center;
+       gap: 8px;
+       color: #6b7280;
+     }
+
+     .spinner {
+       width: 16px;
+       height: 16px;
+       border: 2px solid #e5e7eb;
+       border-top: 2px solid #3b82f6;
+       border-radius: 50%;
+       animation: spin 1s linear infinite;
+     }
+
+     @keyframes spin {
+       0% { transform: rotate(0deg); }
+       100% { transform: rotate(360deg); }
+     }
+
+     /* Dark mode styles for modal */
+     .dark-mode .upload-modal {
+       background: #1e293b;
+       color: #e2e8f0;
+     }
+
+     .dark-mode .modal-title {
+       color: #e2e8f0;
+     }
+
+     .dark-mode .form-label {
+       color: #d1d5db;
+     }
+
+     .dark-mode .form-input {
+       background: #374151;
+       border-color: #4b5563;
+       color: #e2e8f0;
+     }
+
+     .dark-mode .form-input:focus {
+       border-color: #3b82f6;
+     }
+
+     .dark-mode .file-upload {
+       border-color: #4b5563;
+       color: #d1d5db;
+     }
+
+     .dark-mode .file-upload:hover {
+       border-color: #3b82f6;
+       background: #374151;
+     }
+
+     .dark-mode .btn-cancel {
+       background: #374151;
+       border-color: #4b5563;
+       color: #d1d5db;
+     }
+
+     .dark-mode .btn-cancel:hover {
+       background: #4b5563;
+       border-color: #6b7280;
+     }
+   </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">📚</div>
+        <span>PYQ Hub</span>
+      </div>
+      
+      <ul class="nav-menu">
+        <li><a href="#" class="active"><i>📊</i> Dashboard</a></li>
+        <li><a href="#"><i>📁</i> My Uploads</a></li>
+        <li><a href="#"><i>🔍</i> Search PYQs</a></li>
+        <li><a href="#"><i>📚</i> Subjects</a></li>
+        <li><a href="#"><i>🤖</i> AI Assistant</a></li>
+        <li><a href="#"><i>🏆</i> Rewards</a></li>
+        <li><a href="#"><i>👥</i> Community</a></li>
+        <li><a href="#"><i>⚙️</i> Settings</a></li>
+        <li><a href="index.html"><i>🏠</i> Home</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <div>
+          <h1>Welcome back, Student! 👋</h1>
+          <p>Here's what's happening with your PYQ Hub account</p>
+        </div>
+        <div class="user-info">
+          <div class="user-avatar">S</div>
+          <div>
+            <h4>Student User</h4>
+            <p>Level 5 Contributor</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div>
+              <div class="stat-number">24</div>
+              <div class="stat-label">Total Uploads</div>
+            </div>
+            <div class="stat-icon blue">📤</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div>
+              <div class="stat-number">170</div>
+              <div class="stat-label">Downloads</div>
+            </div>
+            <div class="stat-icon green">📥</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div>
+              <div class="stat-number">850</div>
+              <div class="stat-label">Points Earned</div>
+            </div>
+            <div class="stat-icon purple">🏆</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div>
+              <div class="stat-number">12</div>
+              <div class="stat-label">Subjects Covered</div>
+            </div>
+            <div class="stat-icon orange">📚</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Sections -->
+      <div class="content-sections">
+        <!-- Recent Uploads -->
+        <div class="section-card">
+          <div class="section-header">
+            <h3 class="section-title">Recent Uploads</h3>
+            <a href="#" style="color: #3b82f6; text-decoration: none;">View All</a>
+          </div>
+          <div class="section-content">
+            <ul class="recent-uploads">
+              <li class="upload-item">
+                <div class="upload-icon" style="background: #dbeafe; color: #1d4ed8;">📄</div>
+                <div class="upload-info">
+                  <h4>Physics PYQ 2024</h4>
+                  <p>Uploaded 2 hours ago • 15 downloads</p>
+                </div>
+              </li>
+              <li class="upload-item">
+                <div class="upload-icon" style="background: #dcfce7; color: #15803d;">📄</div>
+                <div class="upload-info">
+                  <h4>Chemistry Notes Unit 3</h4>
+                  <p>Uploaded 1 day ago • 8 downloads</p>
+                </div>
+              </li>
+              <li class="upload-item">
+                <div class="upload-icon" style="background: #f3e8ff; color: #7c3aed;">📄</div>
+                <div class="upload-info">
+                  <h4>Mathematics Solutions 2023</h4>
+                  <p>Uploaded 3 days ago • 23 downloads</p>
+                </div>
+              </li>
+              <li class="upload-item">
+                <div class="upload-icon" style="background: #fed7aa; color: #ea580c;">📄</div>
+                <div class="upload-info">
+                  <h4>Computer Science Lab Manual</h4>
+                  <p>Uploaded 1 week ago • 12 downloads</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Activity & Quick Actions -->
+        <div class="section-card">
+          <div class="section-header">
+            <h3 class="section-title">Quick Actions</h3>
+          </div>
+          <div class="section-content">
+                         <div class="quick-actions">
+               <a href="#" class="action-btn" onclick="openUploadModal()">
+                 <div class="action-icon">📤</div>
+                 <div class="action-text">Upload PYQ</div>
+               </a>
+              <a href="#" class="action-btn">
+                <div class="action-icon">🔍</div>
+                <div class="action-text">Search</div>
+              </a>
+              <a href="#" class="action-btn">
+                <div class="action-icon">🤖</div>
+                <div class="action-text">AI Chat</div>
+              </a>
+              <a href="#" class="action-btn">
+                <div class="action-icon">📚</div>
+                <div class="action-text">Browse</div>
+              </a>
+            </div>
+
+            <div style="margin-top: 20px;">
+              <h4 style="margin-bottom: 12px; color: #64748b;">Recent Activity</h4>
+              <div class="activity-item">
+                <div class="activity-icon" style="background: #dcfce7; color: #15803d;">📥</div>
+                <div class="activity-info">
+                  <h4>Downloaded Physics PYQ</h4>
+                  <p>2 hours ago</p>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon" style="background: #f3e8ff; color: #7c3aed;">🏆</div>
+                <div class="activity-info">
+                  <h4>Earned 50 points</h4>
+                  <p>1 day ago</p>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon" style="background: #fed7aa; color: #ea580c;">🤖</div>
+                <div class="activity-info">
+                  <h4>Used AI Assistant</h4>
+                  <p>2 days ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+         </div>
+   </div>
+
+   <!-- Upload Modal -->
+   <div class="modal-overlay" id="uploadModal">
+     <div class="upload-modal">
+       <div class="modal-header">
+         <h2 class="modal-title">Upload Previous Year Questions</h2>
+         <button class="close-btn" onclick="closeUploadModal()">×</button>
+       </div>
+       
+       <form id="uploadForm">
+         <div class="form-group">
+           <label class="form-label" for="title">Title</label>
+           <input type="text" id="title" class="form-input" placeholder="Enter pyq title..." required>
+         </div>
+         
+         <div class="form-group">
+           <label class="form-label" for="description">Description (Optional)</label>
+           <textarea id="description" class="form-input form-textarea" placeholder="Add any additional details..."></textarea>
+         </div>
+         
+         <div class="form-group">
+           <label class="form-label" for="college">College</label>
+           <select id="college" class="form-input form-select" required>
+             <option value="">Select college</option>
+             <option value="Manav Rachna International Institute Of research & Studies">MRIIRS</option>
+             <option value="Manav Rachna University">MRU</option>
+             <option value="IIT Madras">IIT Madras</option>
+             <option value="IIT Kanpur">IIT Kanpur</option>
+             <option value="IIT Kharagpur">IIT Kharagpur</option>
+             <option value="NIT Trichy">NIT Trichy</option>
+             <option value="NIT Surathkal">NIT Surathkal</option>
+             <option value="Other">Other</option>
+           </select>
+         </div>
+         
+         <div class="form-group">
+           <label class="form-label" for="course">Course</label>
+           <select id="course" class="form-input form-select" required>
+             <option value="">Select course</option>
+             <option value="B.Tech">B.Tech</option>
+             <option value="M.Tech">M.Tech</option>
+             <option value="B.Sc">B.Sc</option>
+             <option value="M.Sc">M.Sc</option>
+             <option value="BBA">BBA</option>
+             <option value="MBA">MBA</option>
+             <option value="Other">Other</option>
+           </select>
+         </div>
+         
+         <div class="form-group">
+           <label class="form-label" for="subject">Subject</label>
+           <input type="text" id="subject" class="form-input" placeholder="e.g., Data Structure" required>
+         </div>
+         
+         <div class="form-group">
+           <label class="form-label" for="year">Year</label>
+           <select id="year" class="form-input form-select" required>
+             <option value="">Year</option>
+             <option value="2024">2024</option>
+             <option value="2023">2023</option>
+             <option value="2022">2022</option>
+             <option value="2021">2021</option>
+             <option value="2020">2020</option>
+             <option value="2019">2019</option>
+             <option value="2018">2018</option>
+           </select>
+         </div>
+         
+         <div class="form-group">
+           <label class="form-label" for="semester">Semester</label>
+           <select id="semester" class="form-input form-select" required>
+             <option value="">Sem</option>
+             <option value="1">1st Semester</option>
+             <option value="2">2nd Semester</option>
+             <option value="3">3rd Semester</option>
+             <option value="4">4th Semester</option>
+             <option value="5">5th Semester</option>
+             <option value="6">6th Semester</option>
+             <option value="7">7th Semester</option>
+             <option value="8">8th Semester</option>
+           </select>
+         </div>
+         
+         <div class="form-group">
+           <label class="form-label" for="examType">Exam Type</label>
+           <select id="examType" class="form-input form-select" required>
+             <option value="">Select exam type</option>
+             <option value="Mid Semester">Mid Semester</option>
+             <option value="End Semester">End Semester</option>
+             <option value="Quiz">Quiz</option>
+             <option value="Assignment">Assignment</option>
+             <option value="Lab">Lab</option>
+             <option value="Other">Other</option>
+           </select>
+         </div>
+         
+         <div class="form-group">
+           <label class="form-label">Upload File</label>
+           <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+             <div id="fileText">Choose File</div>
+             <div id="fileName" style="display: none;"></div>
+             <input type="file" id="fileInput" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
+           </div>
+           <div class="file-info">Supported formats: JPG, PNG, PDF (Max 10MB)</div>
+         </div>
+         
+         <div class="modal-actions">
+           <button type="button" class="btn-cancel" onclick="closeUploadModal()">Cancel</button>
+           <button type="submit" class="btn-upload" id="uploadBtn">
+             <span id="uploadText">Upload & Process</span>
+             <div class="loading" id="uploadLoading">
+               <div class="spinner"></div>
+               <span>Uploading...</span>
+             </div>
+           </button>
+         </div>
+       </form>
+     </div>
+   </div>
+
+   <script src="script.js"></script>
+   <script type="module" src="firebase-upload.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Dark mode toggle functionality
+      const toggleBtn = document.createElement('button');
+      toggleBtn.innerHTML = '🌙';
+      toggleBtn.className = 'nav-toggle';
+      toggleBtn.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      `;
+      
+      document.body.appendChild(toggleBtn);
+
+      const body = document.body;
+
+      // Check for saved dark mode preference
+      const savedTheme = localStorage.getItem('darkMode');
+      if (savedTheme === 'enabled') {
+        body.classList.add('dark-mode');
+        toggleBtn.textContent = '🌞';
+      }
+
+      toggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        
+        // Update toggle button text
+        if (body.classList.contains('dark-mode')) {
+          toggleBtn.textContent = '🌞';
+          localStorage.setItem('darkMode', 'enabled');
+        } else {
+          toggleBtn.textContent = '🌙';
+          localStorage.setItem('darkMode', 'disabled');
+        }
+      });
+
+      // Mobile sidebar toggle
+      const sidebar = document.querySelector('.sidebar');
+      const menuToggle = document.createElement('button');
+      menuToggle.innerHTML = '☰';
+      menuToggle.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1001;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: none;
+      `;
+      
+      document.body.appendChild(menuToggle);
+
+      // Show menu toggle on mobile
+      function checkMobile() {
+        if (window.innerWidth <= 768) {
+          menuToggle.style.display = 'block';
+        } else {
+          menuToggle.style.display = 'none';
+          sidebar.classList.remove('open');
+        }
+      }
+
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && 
+            !sidebar.contains(e.target) && 
+            !menuToggle.contains(e.target)) {
+          sidebar.classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
