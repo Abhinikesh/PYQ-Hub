@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PYQ Hub - Previous Year Questions</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <div class="logo-icon">📚</div>
+        <span>PYQ Hub</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="dashboard-btn">Dashboard</a></li>
+        <li><button id="toggle-dark" class="nav-toggle">🌙</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Smart PYQ & Notes<br><span class="highlight">Sharing Platform</span></h1>
+      <p>Upload, discover, and share Previous Year Questions and study notes with AI-powered organization. Get rewarded for contributing to your academic community.</p>
+      <div class="hero-buttons">
+        <a href="dashboard.html" class="btn btn-primary">Dashboard</a>
+        <a href="#subjects" class="btn btn-secondary">Browse PYQs</a>
+        <button onclick="openUploadModal()" class="btn btn-primary">Upload PYQ</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="success-section">
+    <div class="success-content">
+      <h2>Everything You Need for Exam Success</h2>
+      <p>AI-powered features to make studying smarter and more collaborative</p>
+    </div>
+  </section>
+
+  <section id="subjects" class="subjects">
+    <h2>Subjects</h2>
+    <div class="subject-grid">
+      <div class="subject-card">
+        <div class="subject-icon">⚛️</div>
+        <h3>Physics</h3>
+      </div>
+
+      <div class="subject-card">
+        <div class="subject-icon">🧪</div>
+        <h3>Chemistry</h3>
+      </div>
+
+      <div class="subject-card">
+        <div class="subject-icon">📐</div>
+        <h3>Mathematics</h3>
+      </div>
+
+      <div class="subject-card">
+        <div class="subject-icon">💻</div>
+        <h3>Computer Science</h3>
+      </div>
+
+      <div class="subject-card">
+        <div class="subject-icon">📚</div>
+        <h3>English</h3>
+      </div>
+
+      <div class="subject-card">
+        <div class="subject-icon">🧬</div>
+        <h3>Biology</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Cards Section -->
+  <section class="features-section">
+    <div class="features-grid">
+      <!-- Smart Upload -->
+      <div class="feature-card">
+        <div class="feature-icon blue">📤</div>
+        <h3>Smart Upload</h3>
+        <p>Upload PYQs and notes with automatic OCR and AI categorization</p>
+      </div>
+
+      <!-- Advanced Search -->
+      <div class="feature-card">
+        <div class="feature-icon green">🔍</div>
+        <h3>Advanced Search</h3>
+        <p>Find questions by college, course, year, topic, and difficulty</p>
+      </div>
+
+      <!-- AI Question Matching -->
+      <div class="feature-card">
+        <div class="feature-icon purple">🤖</div>
+        <h3>AI Question Matching</h3>
+        <p>Discover similar questions and group related topics automatically</p>
+      </div>
+
+      <!-- AI Study Assistant -->
+      <div class="feature-card">
+        <div class="feature-icon orange">💡</div>
+        <h3>AI Study Assistant</h3>
+        <p>Chat with AI to get explanations and study guidance</p>
+      </div>
+
+      <!-- Rewards System -->
+      <div class="feature-card">
+        <div class="feature-icon red">🏆</div>
+        <h3>Rewards System</h3>
+        <p>Earn points for uploads and climb the leaderboard</p>
+      </div>
+
+      <!-- Community Driven -->
+      <div class="feature-card">
+        <div class="feature-icon purple">👥</div>
+        <h3>Community Driven</h3>
+        <p>Connect with students from your college and course</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Ready to Ace Your Exams?</h2>
+      <p>Join thousands of students who are already using PYQ Hub to improve their grades</p>
+      <a href="signup.html" class="cta-btn">Join PYQ Hub Today</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <p>Made with ❤️ by Team PYQ</p><br>
+        <a href="#">Terms of Use</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <p>© ExamGOAL 2025</p>
+    </div>
+  </footer>
+
+  <!-- Upload Modal -->
+  <div class="modal-overlay" id="uploadModal">
+    <div class="upload-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Upload Previous Year Questions</h2>
+        <button class="close-btn" onclick="closeUploadModal()">×</button>
+      </div>
+      
+      <form id="uploadForm">
+        <div class="form-group">
+          <label class="form-label" for="title">Title</label>
+          <input type="text" id="title" class="form-input" placeholder="Enter pyq title..." required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="description">Description (Optional)</label>
+          <textarea id="description" class="form-input form-textarea" placeholder="Add any additional details..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="college">College</label>
+          <select id="college" class="form-input form-select" required>
+            <option value="">Select college</option>
+            <option value="IIT Delhi">IIT Delhi</option>
+            <option value="IIT Bombay">IIT Bombay</option>
+            <option value="IIT Madras">IIT Madras</option>
+            <option value="IIT Kanpur">IIT Kanpur</option>
+            <option value="IIT Kharagpur">IIT Kharagpur</option>
+            <option value="NIT Trichy">NIT Trichy</option>
+            <option value="NIT Surathkal">NIT Surathkal</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="course">Course</label>
+          <select id="course" class="form-input form-select" required>
+            <option value="">Select course</option>
+            <option value="B.Tech">B.Tech</option>
+            <option value="M.Tech">M.Tech</option>
+            <option value="B.Sc">B.Sc</option>
+            <option value="M.Sc">M.Sc</option>
+            <option value="BBA">BBA</option>
+            <option value="MBA">MBA</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="subject">Subject</label>
+          <input type="text" id="subject" class="form-input" placeholder="e.g., Data Structure" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="year">Year</label>
+          <select id="year" class="form-input form-select" required>
+            <option value="">Year</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+            <option value="2019">2019</option>
+            <option value="2018">2018</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="semester">Semester</label>
+          <select id="semester" class="form-input form-select" required>
+            <option value="">Sem</option>
+            <option value="1">1st Semester</option>
+            <option value="2">2nd Semester</option>
+            <option value="3">3rd Semester</option>
+            <option value="4">4th Semester</option>
+            <option value="5">5th Semester</option>
+            <option value="6">6th Semester</option>
+            <option value="7">7th Semester</option>
+            <option value="8">8th Semester</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="examType">Exam Type</label>
+          <select id="examType" class="form-input form-select" required>
+            <option value="">Select exam type</option>
+            <option value="Mid Semester">Mid Semester</option>
+            <option value="End Semester">End Semester</option>
+            <option value="Quiz">Quiz</option>
+            <option value="Assignment">Assignment</option>
+            <option value="Lab">Lab</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Upload File</label>
+          <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+            <div id="fileText">Choose File</div>
+            <div id="fileName" style="display: none;"></div>
+            <input type="file" id="fileInput" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
+          </div>
+          <div class="file-info">Supported formats: JPG, PNG, PDF (Max 10MB)</div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="closeUploadModal()">Cancel</button>
+          <button type="submit" class="btn-upload" id="uploadBtn">
+            <span id="uploadText">Upload & Process</span>
+            <div class="loading" id="uploadLoading">
+              <div class="spinner"></div>
+              <span>Uploading...</span>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script type="module" src="firebase-upload.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggleBtn = document.getElementById('toggle-dark');
+      const body = document.body;
+
+      // Check for saved dark mode preference
+      const savedTheme = localStorage.getItem('darkMode');
+      if (savedTheme === 'enabled') {
+        body.classList.add('dark-mode');
+        toggleBtn.textContent = '🌞';
+      }
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          body.classList.toggle('dark-mode');
+          
+          // Update toggle button text
+          if (body.classList.contains('dark-mode')) {
+            toggleBtn.textContent = '🌞';
+            localStorage.setItem('darkMode', 'enabled');
+          } else {
+            toggleBtn.textContent = '🌙';
+            localStorage.setItem('darkMode', 'disabled');
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
