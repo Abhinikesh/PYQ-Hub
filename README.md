@@ -111,25 +111,6 @@ The floating **AI Study Assistant** widget lets you:
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions from students and developers!
-
-```bash
-# Fork the repo and create your branch
-git checkout -b feature/YourFeature
-
-# Commit your changes
-git commit -m "Add YourFeature"
-
-# Push and open a Pull Request
-git push origin feature/YourFeature
-```
-
-Please make sure your code follows the existing style and includes appropriate comments.
-
----
-
 ## 📄 License
 
 This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
@@ -146,7 +127,7 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 <div align="center">
 
-**© 2025 ExamGOAL · PYQ Hub**
+**© 2026 ExamGOAL · PYQ Hub**
 
 *Helping students ace their exams, one paper at a time* 🎓
 
