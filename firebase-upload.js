@@ -6,7 +6,7 @@ import { uploadToCloudinary } from './cloudinary-config.js';
 
 // Your Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyAqnBAa5Y0JEbuFohgn6jS9gWvl3JGWors",
+  apiKey: "",
   authDomain: "pyq-hub-fb3bb.firebaseapp.com",
   projectId: "pyq-hub-fb3bb",
   storageBucket: "pyq-hub-fb3bb.firebasestorage.app",
