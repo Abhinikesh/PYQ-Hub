@@ -3,68 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student Community - PYQ Hub</title>
+  <title>Community - PYQ Hub</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
   <link rel="stylesheet" href="community.css">
 </head>
-<body class="community-page">
+<body>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" type="button">☰</button>
 
-  <header class="community-header">
-    <div class="community-logo">PYQ Hub Community</div>
-    <nav class="community-nav">
-      <a href="#forum">Forum</a>
-      <a href="#resources">Resources</a>
-      <a href="#events">Events</a>
-      <a href="index.html" class="nav-home">Home</a>
-    </nav>
-  </header>
+  <div class="dashboard-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">📚</div>
+        <span>PYQ Hub</span>
+      </div>
+      <ul class="nav-menu" id="sidebarNav"></ul>
+      <div class="sidebar-footer">
+        <button type="button" class="sidebar-logout" id="sidebarLogout">Logout</button>
+      </div>
+    </aside>
 
-  <main class="community-main">
+    <main class="main-content">
+      <div class="page-heading">
+        <h1>Community</h1>
+        <p>Discuss, share resources, and stay updated on events</p>
+      </div>
 
-    <section class="community-section" id="forum">
-      <h2>Community Forum</h2>
-      <form class="forum-form" onsubmit="addPost(event)">
-        <input id="question" type="text" placeholder="Your Question..." required />
-        <textarea id="details" rows="2" placeholder="Add details..." required></textarea>
-        <button type="submit">Post</button>
-      </form>
-
-      <div class="forum-posts" id="forum-posts">
-        <div class="post">
-          <h4>📌 How to prepare for semester exams?</h4>
-          <p>Any good strategies or resources you guys follow?</p>
+      <section class="community-section" id="forum">
+        <div class="section-card section-card-spaced">
+          <div class="section-header">
+            <h3 class="section-title">Community Forum</h3>
+          </div>
+          <div class="section-content">
+            <form class="forum-form" id="forumForm">
+              <input id="question" type="text" placeholder="Your question..." required />
+              <textarea id="details" rows="2" placeholder="Add details..." required></textarea>
+              <button type="submit">Post</button>
+            </form>
+            <div class="forum-posts" id="forum-posts"></div>
+          </div>
         </div>
+      </section>
+
+      <section class="community-section" id="resources">
+        <div class="section-card section-card-spaced">
+          <div class="section-header">
+            <h3 class="section-title">Shared Resources</h3>
+          </div>
+          <div class="section-content">
+            <form class="upload-form" id="resourceForm">
+              <input id="file-title" type="text" placeholder="File title" required />
+              <label class="file-picker-btn file-picker-inline">
+                <input id="file-upload" type="file" accept=".pdf,.jpg,.jpeg,.png" required />
+                <span id="resourceFileLabel">Choose file</span>
+              </label>
+              <button type="submit">Upload</button>
+            </form>
+            <ul class="resource-list" id="resource-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="community-section" id="events">
+        <div class="section-card">
+          <div class="section-header">
+            <h3 class="section-title">Upcoming Events</h3>
+          </div>
+          <div class="section-content">
+            <div class="event">
+              <h3>Web Dev Workshop</h3>
+              <p>📅 August 10, 2025 — 🕒 3:00 PM @ Seminar Hall</p>
+            </div>
+            <div class="event">
+              <h3>Hackathon 2025</h3>
+              <p>📅 August 18-20, 2025 — 💻 24hr Online Coding Challenge</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="demoModal">
+    <div class="upload-modal demo-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Resource Preview</h2>
+        <button type="button" class="close-btn" id="demoModalClose">×</button>
       </div>
-    </section>
-
-    <section class="community-section" id="resources">
-      <h2>Shared Resources</h2>
-      <form class="upload-form" onsubmit="addResource(event)">
-        <input id="file-title" type="text" placeholder="File Title" required />
-        <input id="file-upload" type="file" required />
-        <button type="submit">Upload</button>
-      </form>
-
-      <ul class="resource-list" id="resource-list">
-        <li><a href="#">DBMS PYQ - 2024.pdf</a></li>
-        <li><a href="#">C Programming Notes</a></li>
-      </ul>
-    </section>
-
-    <section class="community-section" id="events">
-      <h2>Upcoming Events</h2>
-      <div class="event">
-        <h3>Web Dev Workshop</h3>
-        <p>📅 August 10, 2025 — 🕒 3:00 PM @ Seminar Hall</p>
-      </div>
-      <div class="event">
-        <h3>Hackathon 2025</h3>
-        <p>📅 August 18-20, 2025 — 💻 24hr Online Coding Challenge</p>
-      </div>
-    </section>
-
-  </main>
+      <p id="demoModalText"></p>
+    </div>
+  </div>
 
   <script type="module" src="auth-guard.js"></script>
+  <script type="module" src="community.js"></script>
 </body>
 </html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Uploads - PYQ Hub</title>
+  <link rel="icon" href="pyq logo.jpg">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" type="button">☰</button>
+
+  <div class="dashboard-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">📚</div>
+        <span>PYQ Hub</span>
+      </div>
+      <ul class="nav-menu" id="sidebarNav"></ul>
+      <div class="sidebar-footer">
+        <button type="button" class="sidebar-logout" id="sidebarLogout">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-heading">
+        <h1>My Uploads</h1>
+        <p>Manage PYQs you've shared with the community</p>
+      </div>
+
+      <div class="section-card section-card-spaced">
+        <div class="section-header">
+          <h3 class="section-title">Upload PYQ</h3>
+        </div>
+        <div class="section-content">
+          <form id="uploadForm" class="search-form-grid">
+            <div class="form-group">
+              <label class="form-label" for="uploadTitle">Title</label>
+              <input type="text" id="uploadTitle" class="form-input" placeholder="e.g., DSA PYQ 2025" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="uploadSubject">Subject</label>
+              <input type="text" id="uploadSubject" class="form-input" placeholder="e.g., Data Structures" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="uploadCollege">College</label>
+              <select id="uploadCollege" class="form-input form-select" required>
+                <option value="">Select college</option>
+                <option value="Manav Rachna University">Manav Rachna University</option>
+                <option value="IIT Delhi">IIT Delhi</option>
+                <option value="IIT Bombay">IIT Bombay</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="uploadYear">Year</label>
+              <select id="uploadYear" class="form-input form-select" required>
+                <option value="">Year</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="uploadSemester">Semester</label>
+              <select id="uploadSemester" class="form-input form-select" required>
+                <option value="">Semester</option>
+                <option value="1">1st</option>
+                <option value="2">2nd</option>
+                <option value="3">3rd</option>
+                <option value="4">4th</option>
+                <option value="5">5th</option>
+                <option value="6">6th</option>
+                <option value="7">7th</option>
+                <option value="8">8th</option>
+              </select>
+            </div>
+            <div class="form-group search-form-full">
+              <label class="form-label">File</label>
+              <div class="file-picker">
+                <label class="file-picker-btn">
+                  <input type="file" id="uploadFile" accept=".pdf,.jpg,.jpeg,.png" required>
+                  <span id="uploadFileLabel">Choose a file (PDF, JPG, PNG)</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group search-form-full">
+              <button type="submit" class="btn-upload">Upload PYQ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <h3 class="section-title">Your Uploads</h3>
+        </div>
+        <div class="section-content">
+          <div id="uploadsList"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="auth-guard.js"></script>
+  <script type="module" src="my-uploads.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search PYQs - PYQ Hub</title>
+  <link rel="icon" href="pyq logo.jpg">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" type="button">☰</button>
+
+  <div class="dashboard-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">📚</div>
+        <span>PYQ Hub</span>
+      </div>
+      <ul class="nav-menu" id="sidebarNav"></ul>
+      <div class="sidebar-footer">
+        <button type="button" class="sidebar-logout" id="sidebarLogout">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-heading">
+        <h1>Search PYQs</h1>
+        <p>Filter by college, subject, year, and semester</p>
+      </div>
+
+      <div class="section-card section-card-spaced">
+        <div class="section-content">
+          <form id="searchForm" class="search-form-grid">
+            <div class="form-group">
+              <label class="form-label" for="searchCollege">College</label>
+              <select id="searchCollege" name="college" class="form-input form-select">
+                <option value="">All Colleges</option>
+                <option value="Manav Rachna University">Manav Rachna University</option>
+                <option value="IIT Delhi">IIT Delhi</option>
+                <option value="IIT Bombay">IIT Bombay</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="searchSubject">Subject</label>
+              <input type="text" id="searchSubject" name="subject" class="form-input" placeholder="e.g., Physics">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="searchYear">Year</label>
+              <select id="searchYear" name="year" class="form-input form-select">
+                <option value="">All Years</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="searchSemester">Semester</label>
+              <select id="searchSemester" name="semester" class="form-input form-select">
+                <option value="">All Semesters</option>
+                <option value="1">1st Semester</option>
+                <option value="2">2nd Semester</option>
+                <option value="3">3rd Semester</option>
+                <option value="4">4th Semester</option>
+                <option value="5">5th Semester</option>
+                <option value="6">6th Semester</option>
+                <option value="7">7th Semester</option>
+                <option value="8">8th Semester</option>
+              </select>
+            </div>
+            <div class="form-group search-form-full">
+              <button type="submit" class="btn-upload">🔍 Search PYQs</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <h3 class="section-title">Search Results</h3>
+        </div>
+        <div class="section-content">
+          <div id="searchResults"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="auth-guard.js"></script>
+  <script type="module" src="search-page.js"></script>
+</body>
+</html>
