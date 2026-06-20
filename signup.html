@@ -2,65 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sign Up</title>
+  <title>Sign Up - PYQ Hub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="loginsignup.css">
 </head>
 <body class="auth-page">
 
-  <div class="support-center">
-    <div class="support-icon">💬</div>
-    <div class="support-dropdown">
-      <div class="support-header">
-        <h3>Support Center</h3>
-        <p>Need help? We're here for you!</p>
+  <div class="auth-top">
+    <a href="index.html">← Back to Home</a>
+  </div>
+
+  <main class="auth-shell">
+    <div class="auth-card" id="authCard">
+      <div class="auth-form-view" id="authFormView">
+        <div class="auth-card-header">
+          <div class="auth-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h1>Create your account</h1>
+          <p>Join PYQ Hub and start sharing past papers</p>
+        </div>
+
+        <form id="signup-form">
+          <div class="form_group">
+            <label for="name">Full name</label>
+            <input id="name" class="form_style" type="text" placeholder="Your name" autocomplete="name">
+          </div>
+
+          <div class="form_group">
+            <label for="signup-email">Email</label>
+            <input id="signup-email" class="form_style" type="email" placeholder="you@college.edu" autocomplete="email">
+          </div>
+
+          <div class="form_group">
+            <label for="signup-password">Password</label>
+            <div class="password-wrap">
+              <input id="signup-password" class="form_style" type="password" placeholder="At least 6 characters" autocomplete="new-password">
+              <button type="button" class="password-toggle" data-password-toggle="signup-password" aria-label="Show password">
+                <svg class="icon-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="icon-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-auth">Create Account</button>
+        </form>
+
+        <p class="auth-switch">Already have an account? <a href="login.html" id="loginLink">Sign in</a></p>
       </div>
-      <div class="support-options">
-        <a href="support.html" class="support-option">
-          <span class="support-icon-small">📧</span>
-          <span>Email Support</span>
-        </a>
-        <a href="support.html" class="support-option">
-          <span class="support-icon-small">📞</span>
-          <span>Live Chat</span>
-        </a>
-        <a href="support.html" class="support-option">
-          <span class="support-icon-small">❓</span>
-          <span>FAQ</span>
-        </a>
-        <a href="support.html" class="support-option">
-          <span class="support-icon-small">📚</span>
-          <span>Help Center</span>
-        </a>
+
+      <div class="auth-success is-hidden" id="authSuccess">
+        <div class="success-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="auth-success-text">Welcome!</p>
       </div>
     </div>
-  </div>
+  </main>
 
-  <div class="form_area">
-    <p class="title">Sign up to PYQ Hub</p>
-    <form id="signup-form">
-      <div class="form_group">
-        <label class="sub_title" for="name">Name</label>
-        <input id="name" class="form_style" type="text" placeholder="Enter your full name" required>
-      </div>
-
-      <div class="form_group">
-        <label class="sub_title" for="signup-email">Email</label>
-        <input id="signup-email" class="form_style" type="email" placeholder="Enter your email" required>
-      </div>
-
-      <div class="form_group">
-        <label class="sub_title" for="signup-password">Password</label>
-        <input id="signup-password" class="form_style" type="password" placeholder="Enter your password" required>
-      </div>
-
-      <button type="submit" class="btn">SIGN UP</button>
-    </form>
-
-    <p>Already have an account? <a href="login.html" class="link">Login here</a></p>
-  </div>
-
-  <script type="module" src="firebase-login.js"></script>
+  <script type="module" src="signup.js"></script>
 </body>
 </html>

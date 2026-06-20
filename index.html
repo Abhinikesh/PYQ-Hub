@@ -6,143 +6,158 @@
   <title>PYQ Hub - Previous Year Questions</title>
   <link rel="icon" href="pyq logo.jpg">
   <link rel="stylesheet" href="style.css" />
-
-  
+  <link rel="stylesheet" href="home.css" />
 </head>
 <body>
 
-  <header>
-    <nav class="navbar">
-      <div class="logo">
-        <div class="logo-icon">📚</div>
+  <header class="site-header" id="siteHeader">
+    <nav class="landing-nav">
+      <a href="index.html" class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
         <span>PYQ Hub</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-menu" id="navMenu">
+        <a href="dashboard.html" data-auth="dashboard">Dashboard</a>
+        <a href="#" data-auth="upload">Upload</a>
+        <a href="community.html">Community</a>
       </div>
-      <ul class="nav-links">
-  
-  <a href="dashboard.html" class="dashboard-btn">Dashboard</a>
-  <a href="#" onclick="openUploadModal()" class="nav-link">Upload</a>
-  <a href="community.html" class="nav-link">Community</a>
-  <a href="login.html" class="nav-link">Login</a>
-      </ul>
+
+      <div class="nav-auth" id="navAuth"></div>
     </nav>
-    
-    <!-- 🆘 Support Center -->
-    <div class="support-center-main">
-      <div class="support-icon-main">💬</div>
-      <div class="support-dropdown-main">
-        <div class="support-header-main">
-          <h3>Support Center</h3>
-          <p>Need help? We're here for you!</p>
-        </div>
-        <div class="support-options-main">
-          <a href="support.html" class="support-option-main">
-            <span class="support-icon-small-main">📧</span>
-            <span>Email Support</span>
-          </a>
-          <a href="support.html" class="support-option-main">
-            <span class="support-icon-small-main">📞</span>
-            <span>Live Chat</span>
-          </a>
-          <a href="support.html" class="support-option-main">
-            <span class="support-icon-small-main">❓</span>
-            <span>FAQ</span>
-          </a>
-          <a href="support.html" class="support-option-main">
-            <span class="support-icon-small-main">📚</span>
-            <span>Help Center</span>
-          </a>
-        </div>
-      </div>
-    </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Smart PYQ & Notes<br><span class="highlight">Sharing Platform</span></h1>
-      <p>Upload, discover, and share Previous Year Questions and study notes with AI-powered organization. Get rewarded for contributing to your academic community.</p>
-      <div class="hero-buttons">
-        <a href="dashboard.html" class="btn btn-primary">Dashboard</a>
-        <a href="dashboard.html" class="btn btn-secondary">Browse PYQs</a>
-        <button onclick="openUploadModal()" class="btn btn-primary">Upload PYQ</button>
+  <section class="landing-hero">
+    <div class="hero-bg">
+      <div class="hero-blob hero-blob-1"></div>
+      <div class="hero-blob hero-blob-2"></div>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <span class="hero-eyebrow">Built for students</span>
+        <h1>Smart PYQ &amp; Notes<br><span class="highlight">Sharing Platform</span></h1>
+        <p class="hero-desc">Find past papers by college, subject, and year. Upload what you have, discover what you need, and earn rewards for helping your batch.</p>
+        <div class="hero-actions">
+          <a href="dashboard.html" class="btn btn-secondary" id="heroDashboard" data-auth="dashboard">Dashboard</a>
+          <a href="dashboard.html" class="btn btn-secondary" id="heroBrowse" data-auth="dashboard">Browse PYQs</a>
+          <button type="button" class="btn btn-secondary" id="heroUpload" data-auth="upload">Upload PYQ</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-mockup" aria-hidden="true">
+          <div class="mockup-bar">
+            <span class="mockup-dot"></span>
+            <span class="mockup-dot"></span>
+            <span class="mockup-dot"></span>
+          </div>
+          <div class="mockup-body">
+            <div class="mockup-title">Your Dashboard</div>
+            <div class="mockup-stats">
+              <div class="mockup-stat"><strong>15</strong><span>Uploads</span></div>
+              <div class="mockup-stat"><strong>78</strong><span>Downloads</span></div>
+              <div class="mockup-stat"><strong>550</strong><span>Points</span></div>
+              <div class="mockup-stat"><strong>8</strong><span>Subjects</span></div>
+            </div>
+            <div class="mockup-list">
+              <div class="mockup-row">
+                <div class="mockup-row-icon"></div>
+                <div class="mockup-row-text"><strong>DSA PYQ 2025</strong><span>9 downloads</span></div>
+              </div>
+              <div class="mockup-row">
+                <div class="mockup-row-icon"></div>
+                <div class="mockup-row-text"><strong>Python Notes Unit 3</strong><span>6 downloads</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="features">
-  <h2>What You'll Get Here</h2>
-  <div class="feature-grid">
-    <div class="feature-card" onclick="handleFeatureClick('upload')">
-      <h3>Upload & Earn</h3>
-      <p>Share PYQs and notes to earn rewards like points, badges, or cash.</p>
-      <div class="feature-options is-hidden" id="upload-options">
-        <button onclick="openUploadModal()">Upload PYQ</button>
-        <button onclick="window.location.href='dashboard.html'">View My Uploads</button>
-        <button onclick="window.location.href='support.html'">Learn More</button>
-      </div>
+  <section class="landing-features">
+    <div class="section-head">
+      <h2>What You'll Get Here</h2>
+      <p>Everything you need to prep smarter — from past papers to community support.</p>
     </div>
-    <div class="feature-card" onclick="handleFeatureClick('search')">
-      <h3>Advanced Search</h3>
-      <p>Quickly find content by year, subject, topic, and difficulty.</p>
-      <div class="feature-options is-hidden" id="search-options">
-        <button onclick="window.location.href='dashboard.html'">Search PYQs</button>
-        <button onclick="window.location.href='community.html'">Browse Community</button>
-        <button onclick="window.location.href='support.html'">Search Help</button>
-      </div>
-    </div>
-   <!--  <div class="feature-card">
-      <h3>AI Suggestions</h3>
-      <p>Get smart recommendations based on what you're studying.</p>
-    </div> -->
-    <div class="feature-card" onclick="handleFeatureClick('ai')">
-      <h3>AI Study Assistant</h3>
-      <p>Ask doubts, get summaries, and plan your studies with AI help.</p>
-      <div class="feature-options is-hidden" id="ai-options">
-                 <button onclick="window.location.href='chatbot.html'">Chat with AI</button>
-        <button onclick="window.location.href='support.html'">AI Help</button>
-        <button onclick="window.location.href='community.html'">Study Groups</button>
-      </div>
-    </div>
-    <div class="feature-card" onclick="handleFeatureClick('community')">
-      <h3>Community Driven</h3>
-      <p>Join a growing student community sharing quality resources.</p>
-      <div class="feature-options is-hidden" id="community-options">
-        <button onclick="window.location.href='community.html'">Join Community</button>
-        <button onclick="window.location.href='dashboard.html'">My Groups</button>
-        <button onclick="window.location.href='support.html'">Community Help</button>
-      </div>
-    </div>
-    <div class="feature-card" onclick="handleFeatureClick('rewards')">
-      <h3>Rewards & Badges</h3>
-      <p>Earn points and unlock badges or premium features as you contribute.</p>
-      <div class="feature-options is-hidden" id="rewards-options">
-        <button onclick="window.location.href='dashboard.html'">View Rewards</button>
-        <button onclick="window.location.href='support.html'">Rewards Guide</button>
-        <button onclick="window.location.href='community.html'">Leaderboard</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-  
-
-  <section class="cta-section">
-    <div class="cta-content">
-      <h2>Ready to Ace Your Exams?</h2>
-      <p>Join thousands of students who are already using PYQ Hub to improve their grades</p>
-      <a href="signup.html" class="cta-btn">Join PYQ Hub Today</a>
+    <div class="landing-feature-grid">
+      <article class="landing-feature-card">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <h3>Upload &amp; Earn</h3>
+        <p>Share PYQs and notes to earn points, badges, and recognition in your college community.</p>
+      </article>
+      <article class="landing-feature-card">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>Advanced Search</h3>
+        <p>Filter by college, subject, year, and semester to find exactly the paper you need.</p>
+      </article>
+      <article class="landing-feature-card">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 12h20"/><path d="M8 16h.01"/><path d="M12 16h.01"/></svg>
+        </div>
+        <h3>AI Study Assistant</h3>
+        <p>Ask doubts, get summaries, and plan your revision with an assistant built for exams.</p>
+      </article>
+      <article class="landing-feature-card">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Community Driven</h3>
+        <p>Join students sharing quality resources, tips, and exam prep strategies together.</p>
+      </article>
+      <article class="landing-feature-card">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <h3>Rewards &amp; Badges</h3>
+        <p>Earn points and unlock badges as you contribute — the more you share, the more you gain.</p>
+      </article>
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-links">
-        <p>Crafted by Team 🔥 CyberPunks</p><br>
-        <a href="#">Terms of Use</a>
-        <a href="#">Privacy Policy</a>
+  <section class="landing-cta">
+    <h2>Ready to Ace Your Exams?</h2>
+    <p>Join thousands of students already using PYQ Hub to find papers faster and study smarter.</p>
+    <a href="signup.html" class="cta-btn">Join PYQ Hub Today</a>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-text">PYQ Hub</span>
+        <p>Crafted by Team CyberPunks</p>
       </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="terms.html">Terms of Use</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="support.html">Help Center</a>
+        <a href="community.html">Community</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
       <p>© ExamGOAL 2025</p>
     </div>
   </footer>
+
+  <div class="ai-assistant-link">
+    <a href="chatbot.html" class="ai-assistant-btn">
+      <span class="ai-icon">💬</span>
+      <span class="ai-text">AI Study Assistant</span>
+    </a>
+  </div>
 
   <div class="modal-overlay" id="uploadModal">
     <div class="upload-modal">
@@ -174,57 +189,8 @@
     </div>
   </div>
 
-     <!-- AI Assistant Link -->
-   <div class="ai-assistant-link">
-     <a href="chatbot.html" class="ai-assistant-btn">
-       <span class="ai-icon">🤖</span>
-       <span class="ai-text">AI Study Assistant</span>
-     </a>
-   </div>
-
-  <script src="script.js"></script>
+  <script type="module" src="home.js"></script>
   <script type="module" src="firebase-upload.js"></script>
   <script type="module" src="search.js"></script>
-  <script>
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav-link');
-
-  navLinks.forEach(link => {
-  if (link.href.includes(`${currentPath.split('/').pop()}`)) {
-
-      link.classList.add('active');
-    }
-  });
-
-  // Feature click handler
-  function handleFeatureClick(featureType) {
-    // Hide all other options first
-    const allOptions = document.querySelectorAll('.feature-options');
-    allOptions.forEach(option => {
-      option.classList.add('is-hidden');
-    });
-
-    const targetOptions = document.getElementById(featureType + '-options');
-    if (targetOptions) {
-      targetOptions.classList.remove('is-hidden');
-    }
-  }
-
-     // College dropdown handler
-   function handleCollegeChange() {
-     const collegeSelect = document.getElementById('college');
-     const collegeCustom = document.getElementById('college-custom');
-     
-     if (collegeSelect.value === 'Other') {
-       collegeCustom.classList.remove('is-hidden');
-       collegeCustom.required = true;
-       collegeSelect.required = false;
-     } else {
-       collegeCustom.classList.add('is-hidden');
-       collegeCustom.required = false;
-       collegeSelect.required = true;
-     }
-   }
-</script>
 </body>
 </html>

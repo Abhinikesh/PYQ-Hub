@@ -1,8 +1,8 @@
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-import { auth, setSession, getRedirectTarget } from "./auth.js";
+import { app, auth, setSession, getRedirectTarget } from "./auth.js";
 
-getAnalytics(auth.app);
+getAnalytics(app);
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");

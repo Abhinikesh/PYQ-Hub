@@ -1,12 +1,10 @@
-// Import Firebase functions from CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import { uploadToCloudinary } from './cloudinary-config.js';
+import { getSession } from './auth.js';
 
-// Your Firebase config
 const firebaseConfig = {
-  apiKey: "",
+  apiKey: "AIzaSyAqnBAa5Y0JEbuFohgn6jS9gWvl3JGWors",
   authDomain: "pyq-hub-fb3bb.firebaseapp.com",
   projectId: "pyq-hub-fb3bb",
   storageBucket: "pyq-hub-fb3bb.firebasestorage.app",
@@ -15,19 +13,14 @@ const firebaseConfig = {
   measurementId: "G-VGRQNKZD0P"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
 
-// Global variables
-let currentUser = null;
-
-// Check authentication state
-onAuthStateChanged(auth, (user) => {
-  currentUser = user;
-  console.log("Auth state changed:", user ? "User logged in" : "No user");
-});
+function getCurrentUser() {
+  const session = getSession();
+  if (!session) return null;
+  return { uid: session.email, email: session.email };
+}
 
 // Modal functions
 window.openUploadModal = function() {
@@ -124,6 +117,8 @@ async function handleUpload(e) {
   console.log('Upload form submitted');
 
   // Check if user is authenticated
+  const currentUser = getCurrentUser();
+
   if (!currentUser) {
     alert('Please log in to upload files');
     return;
