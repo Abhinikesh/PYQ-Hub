@@ -1,15 +1,7 @@
-/* ------------------ Reset & Base Styles ------------------ */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f7f9fc;
-  color: #333;
-  transition: background-color 0.3s, color 0.3s;
+body.auth-page {
+  font-family: var(--font);
+  background: var(--color-bg-secondary);
+  color: var(--color-text);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -17,99 +9,42 @@ body {
   position: relative;
 }
 
-/* ------------------ Dark Mode ------------------ */
-body.dark {
-  background-color: #0c0c0c;
-  color: #f1f0f7;
-}
-
-body.light {
-  background-color: #f7f9fc;
-  color: #333;
-}
-
-/* ------------------ Theme Toggle ------------------ */
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-}
-
-.theme-toggle label {
-  font-size: 1.8rem;
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  display: block;
-}
-
-.theme-toggle label:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
-}
-
-body.dark .theme-toggle label {
-  background: rgba(0, 0, 0, 0.3);
-  color: #f1f0f7;
-}
-
-body.dark .theme-toggle label:hover {
-  background: rgba(0, 0, 0, 0.5);
-}
-
-/* ------------------ Support Center ------------------ */
 .support-center {
   position: absolute;
   top: 20px;
   left: 20px;
   z-index: 1000;
-  margin-left: 10px;
 }
 
 .support-icon {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   cursor: pointer;
-  padding: 10px;
+  padding: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease;
   display: block;
 }
 
 .support-icon:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
-}
-
-body.dark .support-icon {
-  background: rgba(0, 0, 0, 0.3);
-  color: #f1f0f7;
-}
-
-body.dark .support-icon:hover {
-  background: rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
 }
 
 .support-dropdown {
   position: absolute;
-  top: 60px;
+  top: 50px;
   left: 0;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  min-width: 280px;
-  max-width: 320px;
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  min-width: 260px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  margin-left: 5px;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+  border: 1px solid var(--color-border);
 }
 
 .support-center:hover .support-dropdown {
@@ -118,256 +53,133 @@ body.dark .support-icon:hover {
   transform: translateY(0);
 }
 
-body.dark .support-dropdown {
-  background: #1a1a2e;
-  border: 1px solid #2d2d44;
-}
-
 .support-header {
-  padding: 20px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-body.dark .support-header {
-  border-bottom: 1px solid #2d2d44;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .support-header h3 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 5px;
-  color: #1e293b;
-}
-
-body.dark .support-header h3 {
-  color: #e0e0e0;
+  margin-bottom: 4px;
 }
 
 .support-header p {
-  font-size: 0.9rem;
-  color: #64748b;
-  margin: 0;
-}
-
-body.dark .support-header p {
-  color: #b0b0b0;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
 }
 
 .support-options {
-  padding: 10px 0;
+  padding: 8px 0;
 }
 
 .support-option {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 20px;
+  padding: 10px 20px;
   text-decoration: none;
-  color: #374151;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  margin: 0 10px;
+  color: var(--color-text);
+  transition: background 0.2s ease;
+  border-radius: var(--radius);
+  margin: 0 8px;
 }
 
 .support-option:hover {
-  background: #f8fafc;
-  color: #1e293b;
-  transform: translateX(5px);
+  background: var(--color-bg-secondary);
+  color: var(--color-primary);
 }
 
-body.dark .support-option {
-  color: #e0e0e0;
-}
-
-body.dark .support-option:hover {
-  background: #2d2d44;
-  color: #64b5f6;
-}
-
-.support-icon-small {
-  font-size: 1.2rem;
-}
-
-/* ------------------ Form Area ------------------ */
 .form_area {
-  background-color: white;
+  background: var(--color-bg);
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: var(--radius);
   width: 100%;
   max-width: 400px;
-  margin: 0px auto;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-body.dark .form_area {
-  background-color: #1a1a2e;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  border: 1px solid #2d2d44;
+  margin: 0 auto;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.75rem;
+  font-weight: 700;
   margin-bottom: 1.5rem;
   text-align: center;
-  color: #1e293b;
-}
-
-body.dark .title {
-  color: #e0e0e0;
 }
 
 .sub_title {
   display: block;
   margin-bottom: 5px;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
-}
-
-body.dark .sub_title {
-  color: #d1d5db;
 }
 
 .form_group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .form_style {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 2px solid #e5e7eb;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
   font-size: 1rem;
+  font-family: var(--font);
   outline: none;
-  transition: all 0.3s ease;
-  background: white;
-  color: #374151;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 .form_style:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-body.dark .form_style {
-  background: #374151;
-  border-color: #4b5563;
-  color: #e0e0e0;
-}
-
-body.dark .form_style:focus {
-  border-color: #64b5f6;
-  box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.1);
-}
-
-body.dark .form_style::placeholder {
-  color: #9ca3af;
+  border-color: var(--color-primary);
 }
 
 .btn {
-  background-color: #3b82f6;
-  color: white;
+  background: var(--color-primary);
+  color: #fff;
   padding: 12px 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius);
   width: 100%;
   cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
+  font-weight: 600;
   font-size: 1rem;
+  font-family: var(--font);
+  transition: background 0.2s ease;
 }
 
 .btn:hover {
-  background-color: #2563eb;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-body.dark .btn {
-  background-color: #64b5f6;
-  color: #0f0f23;
-}
-
-body.dark .btn:hover {
-  background-color: #5a9fd8;
+  background: var(--color-primary-hover);
 }
 
 .link {
-  color: #3b82f6;
+  color: var(--color-primary);
   text-decoration: none;
   display: inline-block;
   margin-top: 1rem;
   font-size: 0.9rem;
-  text-align: center;
-  transition: all 0.3s ease;
 }
 
 .link:hover {
-  color: #2563eb;
   text-decoration: underline;
 }
 
-body.dark .link {
-  color: #64b5f6;
+.form_area > p:last-child {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
 }
 
-body.dark .link:hover {
-  color: #93c5fd;
-}
-
-/* ------------------ Flip Animation ------------------ */
-.flip-card {
-  perspective: 1000px;
-}
-
-.flip-card-inner {
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-
-.flip-card-front, .flip-card-back {
-  backface-visibility: hidden;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-}
-
-.flip-card-back {
-  transform: rotateY(180deg);
-}
-
-/* ------------------ Responsive ------------------ */
-@media screen and (max-width: 500px) {
+@media (max-width: 500px) {
   .form_area {
-    margin: 60px 20px;
+    margin: 60px 16px;
     padding: 1.5rem;
   }
 
-  .title {
-    font-size: 1.6rem;
-  }
-
-  .btn {
-    font-size: 0.9rem;
-  }
-  
-  .support-dropdown {
-    min-width: 200px;
-  }
-  
-  .theme-toggle,
   .support-center {
-    top: 15px;
-  }
-  
-  .theme-toggle {
-    right: 15px;
-  }
-  
-  .support-center {
-    left: 15px;
+    top: 12px;
+    left: 12px;
   }
 }

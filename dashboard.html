@@ -4,17 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PYQ Hub - Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css">
   <link rel="icon" href="pyq logo.jpg">
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="index.html">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  
+  <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" type="button">☰</button>
+
   <div class="dashboard-container">
-    <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="logo-icon">📚</div>
         <span>PYQ Hub</span>
@@ -22,21 +20,14 @@
       
       <ul class="nav-menu">
         <li><a href="dashboard.html" class="active"><i>📊</i> Dashboard</a></li>
-        <li><a href="#" class="active"><i>📁</i> My Uploads</a></li>
-        <li><a href="#" class="active"><i>🔍</i> Search PYQs</a></li>
-        <!-- <li><a href="#"><i>📚</i> Subjects</a></li> -->
-        <!-- <li><a href="#"><i>🤖</i> AI Assistant</a></li>
-        <li><a href="#"><i>🏆</i> Rewards</a></li> -->
-        <li><a href="community.html"  class="active"><i>👥</i> Community</a></li>
-        
-        <!-- <li><a href="#"><i>⚙️</i> Settings</a></li> -->
-        <li><a href="index.html"  class="active"><i>🏠</i> Home</a></li>
+        <li><a href="#"><i>📁</i> My Uploads</a></li>
+        <li><a href="#"><i>🔍</i> Search PYQs</a></li>
+        <li><a href="community.html"><i>👥</i> Community</a></li>
+        <li><a href="index.html"><i>🏠</i> Home</a></li>
       </ul>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
-      <!-- Dashboard Header -->
       <div class="dashboard-header">
         <div>
           <h1>Welcome back, Student! 👋</h1>
@@ -51,7 +42,6 @@
         </div>
       </div>
 
-      <!-- Stats Grid -->
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-header">
@@ -94,13 +84,12 @@
         </div>
       </div>
 
-      <!-- Search Section -->
-      <div class="section-card" style="margin-bottom: 20px;">
+      <div class="section-card section-card-spaced">
         <div class="section-header">
           <h3 class="section-title">Search PYQs</h3>
         </div>
         <div class="section-content">
-          <form id="searchForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+          <form id="searchForm" class="search-form-grid">
             <div class="form-group">
               <label class="form-label" for="searchCollege">College</label>
               <select id="searchCollege" name="college" class="form-input form-select">
@@ -145,58 +134,55 @@
               </select>
             </div>
             
-            <div class="form-group" style="grid-column: 1 / -1;">
-              <button type="submit" class="btn-upload" style="width: 100%;">🔍 Search PYQs</button>
+            <div class="form-group search-form-full">
+              <button type="submit" class="btn-upload">🔍 Search PYQs</button>
             </div>
           </form>
         </div>
       </div>
 
-      <!-- Search Results -->
-      <div class="section-card" style="margin-bottom: 20px;">
+      <div class="section-card section-card-spaced">
         <div class="section-header">
           <h3 class="section-title">Search Results</h3>
         </div>
         <div class="section-content">
           <div id="searchResults">
-            <p style="text-align: center; color: #64748b;">Search for PYQs to see results here</p>
+            <p class="search-empty">Search for PYQs to see results here</p>
           </div>
         </div>
       </div>
 
-      <!-- Content Sections -->
       <div class="content-sections">
-        <!-- Recent Uploads -->
         <div class="section-card">
           <div class="section-header">
             <h3 class="section-title">Recent Uploads</h3>
-            <a href="#" style="color: #3b82f6; text-decoration: none;">View All</a>
+            <a href="#" class="section-link">View All</a>
           </div>
           <div class="section-content">
             <ul class="recent-uploads">
               <li class="upload-item">
-                <div class="upload-icon" style="background: #dbeafe; color: #1d4ed8;">📄</div>
+                <div class="upload-icon blue">📄</div>
                 <div class="upload-info">
                   <h4>DSA PYQ 2025</h4>
                   <p>Uploaded 2 hours ago • 9 downloads</p>
                 </div>
               </li>
               <li class="upload-item">
-                <div class="upload-icon" style="background: #dcfce7; color: #15803d;">📄</div>
+                <div class="upload-icon green">📄</div>
                 <div class="upload-info">
                   <h4>PYTHON Notes Unit 3</h4>
                   <p>Uploaded 1 day ago • 6 downloads</p>
                 </div>
               </li>
               <li class="upload-item">
-                <div class="upload-icon" style="background: #f3e8ff; color: #7c3aed;">📄</div>
+                <div class="upload-icon purple">📄</div>
                 <div class="upload-info">
                   <h4>Mathematics Solutions 2024</h4>
                   <p>Uploaded 3 days ago • 23 downloads</p>
                 </div>
               </li>
               <li class="upload-item">
-                <div class="upload-icon" style="background: #fed7aa; color: #ea580c;">📄</div>
+                <div class="upload-icon orange">📄</div>
                 <div class="upload-info">
                   <h4>OOP's Practical file</h4>
                   <p>Uploaded 1 week ago • 15 downloads</p>
@@ -206,49 +192,48 @@
           </div>
         </div>
 
-        <!-- Activity & Quick Actions -->
         <div class="section-card">
           <div class="section-header">
             <h3 class="section-title">Quick Actions</h3>
           </div>
           <div class="section-content">
-                         <div class="quick-actions">
-               <a href="#" class="action-btn" onclick="openUploadModal()">
-                 <div class="action-icon">📤</div>
-                 <div class="action-text">Upload PYQ</div>
-               </a>
+            <div class="quick-actions">
+              <a href="#" class="action-btn" onclick="openUploadModal()">
+                <div class="action-icon">📤</div>
+                <div class="action-text">Upload PYQ</div>
+              </a>
               <a href="#" class="action-btn">
                 <div class="action-icon">🔍</div>
                 <div class="action-text">Search</div>
               </a>
-              <a href="#" class="action-btn">
+              <a href="chatbot.html" class="action-btn">
                 <div class="action-icon">🤖</div>
                 <div class="action-text">AI Chat</div>
               </a>
-              <a href="#" class="action-btn">
+              <a href="dashboard.html" class="action-btn">
                 <div class="action-icon">📚</div>
                 <div class="action-text">Browse</div>
               </a>
             </div>
 
-            <div style="margin-top: 20px;">
-              <h4 style="margin-bottom: 12px; color: #64748b;">Recent Activity</h4>
+            <div class="activity-block">
+              <h4 class="activity-heading">Recent Activity</h4>
               <div class="activity-item">
-                <div class="activity-icon" style="background: #dcfce7; color: #15803d;">📥</div>
+                <div class="activity-icon green">📥</div>
                 <div class="activity-info">
                   <h4>Downloaded DSA PYQ</h4>
                   <p>2 hours ago</p>
                 </div>
               </div>
               <div class="activity-item">
-                <div class="activity-icon" style="background: #f3e8ff; color: #7c3aed;">🏆</div>
+                <div class="activity-icon purple">🏆</div>
                 <div class="activity-info">
                   <h4>Earned 50 points</h4>
                   <p>1 day ago</p>
                 </div>
               </div>
               <div class="activity-item">
-                <div class="activity-icon" style="background: #fed7aa; color: #ea580c;">🤖</div>
+                <div class="activity-icon orange">🤖</div>
                 <div class="activity-info">
                   <h4>Used AI Assistant</h4>
                   <p>2 days ago</p>
@@ -258,252 +243,147 @@
           </div>
         </div>
       </div>
-         </div>
-   </div>
+    </div>
+  </div>
 
-   <!-- Upload Modal -->
-   <div class="modal-overlay" id="uploadModal">
-     <div class="upload-modal">
-       <div class="modal-header">
-         <h2 class="modal-title">Upload Previous Year Questions</h2>
-         <button class="close-btn" onclick="closeUploadModal()">×</button>
-       </div>
-       
-       <form id="uploadForm">
-         <div class="form-group">
-           <label class="form-label" for="title">Title</label>
-           <input type="text" id="title" class="form-input" placeholder="Enter pyq title..." required>
-         </div>
-         
-         <div class="form-group">
-           <label class="form-label" for="description">Description (Optional)</label>
-           <textarea id="description" class="form-input form-textarea" placeholder="Add any additional details..."></textarea>
-         </div>
-         
-         <div class="form-group">
-           <label class="form-label" for="college">College</label>
-           <select id="college" class="form-input form-select" required>
-             <option value="">Select college</option>
-             <option value="IIT Delhi">IIT Delhi</option>
-             <option value="IIT Bombay">IIT Bombay</option>
-             <option value="IIT Madras">IIT Madras</option>
-             <option value="IIT Kanpur">IIT Kanpur</option>
-             <option value="IIT Kharagpur">IIT Kharagpur</option>
-             <option value="NIT Trichy">NIT Trichy</option>
-             <option value="NIT Surathkal">NIT Surathkal</option>
-             <option value="Other">Other</option>
-           </select>
-         </div>
-         
-         <div class="form-group">
-           <label class="form-label" for="course">Course</label>
-           <select id="course" class="form-input form-select" required>
-             <option value="">Select course</option>
-             <option value="B.Tech">B.Tech</option>
-             <option value="M.Tech">M.Tech</option>
-             <option value="B.Sc">B.Sc</option>
-             <option value="M.Sc">M.Sc</option>
-             <option value="BBA">BBA</option>
-             <option value="MBA">MBA</option>
-             <option value="Other">Other</option>
-           </select>
-         </div>
-         
-         <div class="form-group">
-           <label class="form-label" for="subject">Subject</label>
-           <input type="text" id="subject" class="form-input" placeholder="e.g., Data Structure" required>
-         </div>
-         
-         <div class="form-group">
-           <label class="form-label" for="year">Year</label>
-           <select id="year" class="form-input form-select" required>
-             <option value="">Year</option>
-             <option value="2024">2024</option>
-             <option value="2023">2023</option>
-             <option value="2022">2022</option>
-             <option value="2021">2021</option>
-             <option value="2020">2020</option>
-             <option value="2019">2019</option>
-             <option value="2018">2018</option>
-           </select>
-         </div>
-         
-         <div class="form-group">
-           <label class="form-label" for="semester">Semester</label>
-           <select id="semester" class="form-input form-select" required>
-             <option value="">Sem</option>
-             <option value="1">1st Semester</option>
-             <option value="2">2nd Semester</option>
-             <option value="3">3rd Semester</option>
-             <option value="4">4th Semester</option>
-             <option value="5">5th Semester</option>
-             <option value="6">6th Semester</option>
-             <option value="7">7th Semester</option>
-             <option value="8">8th Semester</option>
-           </select>
-         </div>
-         
-         <div class="form-group">
-           <label class="form-label" for="examType">Exam Type</label>
-           <select id="examType" class="form-input form-select" required>
-             <option value="">Select exam type</option>
-             <option value="Mid Semester">Mid Semester</option>
-             <option value="End Semester">End Semester</option>
-             <option value="Quiz">Quiz</option>
-             <option value="Assignment">Assignment</option>
-             <option value="Lab">Lab</option>
-             <option value="Other">Other</option>
-           </select>
-         </div>
-         
-         <div class="form-group">
-           <label class="form-label">Upload File</label>
-           <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-             <div id="fileText">Choose File</div>
-             <div id="fileName" style="display: none;"></div>
-             <input type="file" id="fileInput" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
-           </div>
-           <div class="file-info">Supported formats: JPG, PNG, PDF (Max 10MB)</div>
-         </div>
-         
-         <div class="modal-actions">
-           <button type="button" class="btn-cancel" onclick="closeUploadModal()">Cancel</button>
-           <button type="submit" class="btn-upload" id="uploadBtn">
-             <span id="uploadText">Upload & Process</span>
-             <div class="loading" id="uploadLoading">
-               <div class="spinner"></div>
-               <span>Uploading...</span>
-             </div>
-           </button>
-         </div>
-       </form>
-     </div>
-   </div>
-
-   <script src="script.js"></script>
-   <script type="module" src="firebase-upload.js"></script>
-   <script type="module" src="search.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Dark mode toggle functionality
-      const toggleBtn = document.createElement('button');
-      toggleBtn.innerHTML = '🌙';
-      toggleBtn.className = 'nav-toggle';
-      toggleBtn.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
-        background-color: #1f1f2e;
-        color: #fff;
-        padding: 12px;
-        border-radius: 50%;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        transition: background-color 0.3s ease;
-      `;
+  <div class="modal-overlay" id="uploadModal">
+    <div class="upload-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Upload Previous Year Questions</h2>
+        <button class="close-btn" onclick="closeUploadModal()">×</button>
+      </div>
       
-      document.body.appendChild(toggleBtn);
-
-      const body = document.body;
-
-      // Check for saved dark mode preference
-      const savedTheme = localStorage.getItem('darkMode');
-      if (savedTheme === 'enabled') {
-        body.classList.add('dark-mode');
-        toggleBtn.textContent = '🌞';
-      }
-
-      toggleBtn.addEventListener('click', () => {
-        body.classList.toggle('dark-mode');
+      <form id="uploadForm">
+        <div class="form-group">
+          <label class="form-label" for="title">Title</label>
+          <input type="text" id="title" class="form-input" placeholder="Enter pyq title..." required>
+        </div>
         
-        // Update toggle button text
-        if (body.classList.contains('dark-mode')) {
-          toggleBtn.textContent = '🌞';
-          localStorage.setItem('darkMode', 'enabled');
-        } else {
-          toggleBtn.textContent = '🌙';
-          localStorage.setItem('darkMode', 'disabled');
-        }
-      });
+        <div class="form-group">
+          <label class="form-label" for="description">Description (Optional)</label>
+          <textarea id="description" class="form-input form-textarea" placeholder="Add any additional details..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="college">College</label>
+          <select id="college" class="form-input form-select" required>
+            <option value="">Select college</option>
+            <option value="IIT Delhi">IIT Delhi</option>
+            <option value="IIT Bombay">IIT Bombay</option>
+            <option value="IIT Madras">IIT Madras</option>
+            <option value="IIT Kanpur">IIT Kanpur</option>
+            <option value="IIT Kharagpur">IIT Kharagpur</option>
+            <option value="NIT Trichy">NIT Trichy</option>
+            <option value="NIT Surathkal">NIT Surathkal</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="course">Course</label>
+          <select id="course" class="form-input form-select" required>
+            <option value="">Select course</option>
+            <option value="B.Tech">B.Tech</option>
+            <option value="M.Tech">M.Tech</option>
+            <option value="B.Sc">B.Sc</option>
+            <option value="M.Sc">M.Sc</option>
+            <option value="BBA">BBA</option>
+            <option value="MBA">MBA</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="subject">Subject</label>
+          <input type="text" id="subject" class="form-input" placeholder="e.g., Data Structure" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="year">Year</label>
+          <select id="year" class="form-input form-select" required>
+            <option value="">Year</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+            <option value="2019">2019</option>
+            <option value="2018">2018</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="semester">Semester</label>
+          <select id="semester" class="form-input form-select" required>
+            <option value="">Sem</option>
+            <option value="1">1st Semester</option>
+            <option value="2">2nd Semester</option>
+            <option value="3">3rd Semester</option>
+            <option value="4">4th Semester</option>
+            <option value="5">5th Semester</option>
+            <option value="6">6th Semester</option>
+            <option value="7">7th Semester</option>
+            <option value="8">8th Semester</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="examType">Exam Type</label>
+          <select id="examType" class="form-input form-select" required>
+            <option value="">Select exam type</option>
+            <option value="Mid Semester">Mid Semester</option>
+            <option value="End Semester">End Semester</option>
+            <option value="Quiz">Quiz</option>
+            <option value="Assignment">Assignment</option>
+            <option value="Lab">Lab</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Upload File</label>
+          <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+            <div id="fileText">Choose File</div>
+            <div id="fileName" class="is-hidden"></div>
+            <input type="file" id="fileInput" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
+          </div>
+          <div class="file-info">Supported formats: JPG, PNG, PDF (Max 10MB)</div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="closeUploadModal()">Cancel</button>
+          <button type="submit" class="btn-upload" id="uploadBtn">
+            <span id="uploadText">Upload & Process</span>
+            <div class="loading" id="uploadLoading">
+              <div class="spinner"></div>
+              <span>Uploading...</span>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-      // Mobile sidebar toggle
-      const sidebar = document.querySelector('.sidebar');
-      const menuToggle = document.createElement('button');
-      menuToggle.innerHTML = '☰';
-      menuToggle.style.cssText = `
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        z-index: 1001;
-        background: #3b82f6;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        display: none;
-      `;
-      
-      document.body.appendChild(menuToggle);
+  <script src="script.js"></script>
+  <script type="module" src="firebase-upload.js"></script>
+  <script type="module" src="search.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const sidebar = document.getElementById('sidebar');
+      const menuBtn = document.getElementById('mobileMenuBtn');
 
-      // Show menu toggle on mobile
-      function checkMobile() {
-        if (window.innerWidth <= 768) {
-          menuToggle.style.display = 'block';
-        } else {
-          menuToggle.style.display = 'none';
-          sidebar.classList.remove('open');
-        }
-      }
-
-      checkMobile();
-      window.addEventListener('resize', checkMobile);
-
-      menuToggle.addEventListener('click', () => {
+      menuBtn.addEventListener('click', () => {
         sidebar.classList.toggle('open');
       });
 
-      // Close sidebar when clicking outside on mobile
       document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768 && 
-            !sidebar.contains(e.target) && 
-            !menuToggle.contains(e.target)) {
+        if (window.innerWidth <= 768 &&
+            !sidebar.contains(e.target) &&
+            !menuBtn.contains(e.target)) {
           sidebar.classList.remove('open');
         }
       });
     });
   </script>
-
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const toggleBtn = document.getElementById("darkModeToggle");
-    const body = document.body;
-
-    // Load saved mode from localStorage
-    const savedMode = localStorage.getItem('darkMode');
-    if (savedMode === 'enabled') {
-      body.classList.add('dark-mode');
-      toggleBtn.textContent = '🌞';
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');
-
-      if (body.classList.contains('dark-mode')) {
-        toggleBtn.textContent = '🌞';
-        localStorage.setItem('darkMode', 'enabled');
-      } else {
-        toggleBtn.textContent = '🌙';
-        localStorage.setItem('darkMode', 'disabled');
-      }
-    });
-  });
-</script>
-
-
 </body>
-</html> 
+</html>

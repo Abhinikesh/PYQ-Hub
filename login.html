@@ -4,19 +4,11 @@
   <meta charset="UTF-8">
   <title>Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="loginsignup.css">
 </head>
-<body>
+<body class="auth-page">
 
-  <!-- 🌗 Theme Toggle Button -->
-  <div class="theme-toggle">
-    <input type="checkbox" id="darkModeToggle" hidden>
-    <label for="darkModeToggle" class="emoji-toggle">🌞</label>
-  </div>
-
-  <!-- 🆘 Support Center -->
   <div class="support-center">
     <div class="support-icon">💬</div>
     <div class="support-dropdown">
@@ -45,69 +37,26 @@
     </div>
   </div>
 
-  <!-- 🧾 Login Form Container -->
   <div class="form_area">
     <p class="title">Login to PYQ Hub</p>
 
-    <!-- Login Form -->
     <form id="login-form">
-
-      <!-- 📧 Email Input -->
       <div class="form_group">
         <label class="sub_title" for="login-email">Email</label>
         <input id="login-email" class="form_style" type="email" placeholder="Enter your email" required>
       </div>
 
-      <!-- 🔒 Password Input -->
       <div class="form_group">
         <label class="sub_title" for="login-password">Password</label>
         <input id="login-password" class="form_style" type="password" placeholder="Enter your password" required>
       </div>
 
-      <!-- 🔘 Submit Button -->
       <button type="submit" class="btn">LOGIN</button>
     </form>
 
-    <!-- 🔗 Link to Signup Page -->
     <p>Don't have an account? <a href="signup.html" class="link">Sign Up here</a></p>
   </div>
 
-  <!-- 🌙 Dark Mode Toggle Script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const toggle = document.getElementById("darkModeToggle");
-      const emojiToggle = document.querySelector(".emoji-toggle");
-      const body = document.body;
-      
-      // Check for saved theme preference or default to light mode
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
-        body.classList.add("dark");
-        emojiToggle.textContent = "🌙";
-      } else {
-        body.classList.add("light");
-        emojiToggle.textContent = "🌞";
-      }
-
-      toggle.addEventListener("change", () => {
-        // Toggle dark mode on body
-        body.classList.toggle("dark");
-        body.classList.toggle("light");
-        
-        // Change emoji based on theme
-        if (body.classList.contains("dark")) {
-          emojiToggle.textContent = "🌙";
-          localStorage.setItem('theme', 'dark');
-        } else {
-          emojiToggle.textContent = "🌞";
-          localStorage.setItem('theme', 'light');
-        }
-      });
-    });
-  </script>
-
-  <!-- 🔐 Firebase Login Logic -->
   <script type="module" src="firebase-login.js"></script>
-
 </body>
 </html>

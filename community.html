@@ -3,212 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student Community</title>
-  <style>
-    :root {
-      --bg: #f5f7fa;
-      --text: #000;
-      --primary: #0a7cff;
-      --card: #ffffff;
-      --accent: #e6f0ff;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      transition: all 0.3s ease;
-    }
-
-    header {
-      background: var(--primary);
-      color: #fff;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
-    }
-
-    nav {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    #toggle-theme {
-      background: none;
-      border: 2px solid white;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      font-size: 1rem;
-      color: white;
-      cursor: pointer;
-    }
-
-    main {
-      padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    section {
-      margin-bottom: 4rem;
-    }
-
-    h2 {
-      border-left: 6px solid var(--primary);
-      padding-left: 10px;
-      color: var(--primary);
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    /* Chat-like Forum */
-    .forum-form {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .forum-form input, .forum-form textarea {
-      padding: 10px;
-      font-size: 1rem;
-      flex: 1;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    .forum-form button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .forum-posts {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .post {
-      background: var(--accent);
-      max-width: 70%;
-      padding: 12px 16px;
-      border-radius: 15px 15px 0 15px;
-      align-self: flex-start;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    /* Resources */
-    .upload-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-width: 400px;
-    }
-
-    .upload-form input[type="text"], .upload-form input[type="file"] {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    .upload-form button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .resource-list {
-      margin-top: 1rem;
-    }
-
-    .resource-list li {
-      margin-bottom: 10px;
-    }
-
-    .resource-list li a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    /* Events */
-    .event {
-      background: var(--card);
-      padding: 1rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .event h3 {
-      margin: 0;
-      color: var(--primary);
-    }
-
-    body.dark {
-      --bg: #121212;
-      --text: #f0f0f0;
-      --primary: #00b0ff;
-      --card: #1e1e1e;
-      --accent: #263238;
-    }
-
-    body.dark a {
-      color: #81d4fa;
-    }
-
-    @media (max-width: 600px) {
-      .forum-form {
-        flex-direction: column;
-      }
-      .post {
-        max-width: 100%;
-      }
-    }
-  </style>
+  <title>Student Community - PYQ Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="community.css">
 </head>
-<body>
-    <body class="dark">
+<body class="community-page">
 
-
-  <header>
-    <div class="logo">StudentCommunity</div>
-    <nav>
+  <header class="community-header">
+    <div class="community-logo">PYQ Hub Community</div>
+    <nav class="community-nav">
       <a href="#forum">Forum</a>
       <a href="#resources">Resources</a>
       <a href="#events">Events</a>
-      <button id="toggle-theme" title="Dark Mode">🌙</button>
+      <a href="index.html" class="nav-home">Home</a>
     </nav>
   </header>
 
-  <main>
+  <main class="community-main">
 
-    <!-- Forum Section -->
-    <section id="forum">
+    <section class="community-section" id="forum">
       <h2>Community Forum</h2>
       <form class="forum-form" onsubmit="addPost(event)">
         <input id="question" type="text" placeholder="Your Question..." required />
@@ -224,8 +37,7 @@
       </div>
     </section>
 
-    <!-- Resources Section -->
-    <section id="resources">
+    <section class="community-section" id="resources">
       <h2>Shared Resources</h2>
       <form class="upload-form" onsubmit="addResource(event)">
         <input id="file-title" type="text" placeholder="File Title" required />
@@ -239,8 +51,7 @@
       </ul>
     </section>
 
-    <!-- Events Section -->
-    <section id="events">
+    <section class="community-section" id="events">
       <h2>Upcoming Events</h2>
       <div class="event">
         <h3>Web Dev Workshop</h3>
@@ -254,15 +65,5 @@
 
   </main>
 
-  <script>
-    // Dark mode toggle
-    const themeBtn = document.getElementById("toggle-theme");
-
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  themeBtn.textContent = document.body.classList.contains("dark") ? "🌙" : "☀️";
-});
-
-  </script>
 </body>
 </html>
