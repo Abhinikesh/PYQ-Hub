@@ -305,3 +305,34 @@ body.auth-page {
     padding-bottom: 24px;
   }
 }
+
+.google-auth-separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.google-auth-separator::before,
+.google-auth-separator::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.google-auth-separator:not(:empty)::before {
+  margin-right: .5em;
+}
+
+.google-auth-separator:not(:empty)::after {
+  margin-left: .5em;
+}
+
+.google-auth-btn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  width: 100%;
+}

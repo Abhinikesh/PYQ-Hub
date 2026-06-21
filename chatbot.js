@@ -79,7 +79,7 @@ export class Chatbot {
     this.hideTypingIndicator();
   }
 
-  sendMessage() {
+  async sendMessage() {
     const message = this.messageInput.value.trim();
     if (!message) return;
 
@@ -91,12 +91,9 @@ export class Chatbot {
     this.maybeTriggerActivityLogging();
     this.showTypingIndicator();
 
-    const delay = 800 + Math.random() * 700;
-    setTimeout(() => {
-      this.hideTypingIndicator();
-      const response = this.generateAIResponse(message);
-      this.addMessage(response, "bot");
-    }, delay);
+    const responseText = await this.fetchBotResponse(message);
+    this.hideTypingIndicator();
+    this.addMessage(responseText, "bot");
   }
 
   maybeTriggerActivityLogging() {
@@ -151,6 +148,39 @@ export class Chatbot {
     );
     formatted = formatted.replace(/\n/g, "<br>");
     return formatted;
+  }
+
+  async fetchBotResponse(message) {
+    const session = getSession();
+    if (!session || !session.token) {
+      return this.generateAIResponse(message);
+    }
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${session.token}`
+        },
+        body: JSON.stringify({
+          message,
+          history: this.conversationHistory.slice(-10).map(h => ({
+            sender: h.sender,
+            content: h.content
+          }))
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Chat proxy failed");
+      }
+
+      const data = await response.json();
+      return data.response;
+    } catch {
+      return this.generateAIResponse(message);
+    }
   }
 
   generateAIResponse(userMessage) {
@@ -213,7 +243,7 @@ export class Chatbot {
     return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
   }
 
-  handleQuickAction(action) {
+  async handleQuickAction(action) {
     let message = "";
     if (action === "study-tips") {
       message = "Can you give me some study tips?";
@@ -230,12 +260,9 @@ export class Chatbot {
       this.maybeTriggerActivityLogging();
       this.showTypingIndicator();
 
-      const delay = 800 + Math.random() * 700;
-      setTimeout(() => {
-        this.hideTypingIndicator();
-        const response = this.generateAIResponse(message);
-        this.addMessage(response, "bot");
-      }, delay);
+      const responseText = await this.fetchBotResponse(message);
+      this.hideTypingIndicator();
+      this.addMessage(responseText, "bot");
     }
   }
 

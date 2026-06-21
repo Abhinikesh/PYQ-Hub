@@ -16,9 +16,9 @@ function escapeHtml(str) {
   return d.innerHTML;
 }
 
-function renderForum() {
+async function renderForum() {
   const container = document.getElementById("forum-posts");
-  const posts = getForumPosts();
+  const posts = await getForumPosts();
 
   container.innerHTML = posts.map((p) => `
     <div class="post">
@@ -31,17 +31,18 @@ function renderForum() {
   `).join("");
 }
 
-function renderResources() {
+async function renderResources() {
   const list = document.getElementById("resource-list");
-  const resources = getResources();
+  const resources = await getResources();
 
   list.innerHTML = resources.map((r) => `
     <li><button type="button" class="resource-link" data-id="${r.id}">${escapeHtml(r.title)}</button></li>
   `).join("");
 
   list.querySelectorAll(".resource-link").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const item = getResources().find((r) => r.id === btn.dataset.id);
+    btn.addEventListener("click", async () => {
+      const currentResources = await getResources();
+      const item = currentResources.find((r) => r.id === btn.dataset.id);
       if (!item) return;
       openDemoModal(item.title, item.fileName, item.isDemo);
     });
@@ -67,15 +68,15 @@ document.getElementById("demoModal").addEventListener("click", (e) => {
   }
 });
 
-document.getElementById("forumForm").addEventListener("submit", (e) => {
+document.getElementById("forumForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const title = document.getElementById("question").value.trim();
   const body = document.getElementById("details").value.trim();
   if (!title || !body) return;
 
-  addForumPost(session.email, session.name, title, body);
+  await addForumPost(session.email, session.name, title, body);
   e.target.reset();
-  renderForum();
+  await renderForum();
 });
 
 const resourceFile = document.getElementById("file-upload");
@@ -87,13 +88,13 @@ resourceFile.addEventListener("change", () => {
     : "Choose file";
 });
 
-document.getElementById("resourceForm").addEventListener("submit", (e) => {
+document.getElementById("resourceForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const title = document.getElementById("file-title").value.trim();
   const file = resourceFile.files[0];
   if (!title || !file) return;
 
-  addResource({
+  await addResource({
     title,
     fileName: file.name,
     uploaderEmail: session.email,
@@ -103,7 +104,7 @@ document.getElementById("resourceForm").addEventListener("submit", (e) => {
 
   e.target.reset();
   resourceFileLabel.textContent = "Choose file";
-  renderResources();
+  await renderResources();
 });
 
 renderForum();

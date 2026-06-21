@@ -1,5 +1,6 @@
 import { initAppShell } from "./app-shell.js";
-import { customConfirm } from "./auth.js";
+import { customConfirm, customAlert } from "./auth.js";
+import { uploadToCloudinary } from "./cloudinary-config.js";
 import {
   getUserUploads,
   addUpload,
@@ -18,9 +19,9 @@ function escapeHtml(str) {
   return d.innerHTML;
 }
 
-function renderList() {
+async function renderList() {
   const container = document.getElementById("uploadsList");
-  const uploads = getUserUploads(session.email);
+  const uploads = await getUserUploads(session.email);
 
   if (!uploads.length) {
     container.innerHTML = `<p class="uploads-empty">You haven't uploaded anything yet. Use the form above to add your first PYQ.</p>`;
@@ -32,7 +33,7 @@ function renderList() {
       <div class="upload-row-icon ${iconClass(i)}">📄</div>
       <div class="upload-row-info">
         <h4>${escapeHtml(u.title)}</h4>
-        <p>${escapeHtml(u.subject)} • ${escapeHtml(u.college)} • ${escapeHtml(u.year)} • Sem ${escapeHtml(String(u.semester))}</p>
+        <p>${escapeHtml(u.subject)} • ${escapeHtml(u.college)} • ${escapeHtml(String(u.year))} • Sem ${escapeHtml(String(u.semester))}</p>
         <p class="upload-row-meta">Uploaded ${formatRelativeTime(u.uploadDate)} • ${u.downloadCount} downloads • ${escapeHtml(u.fileName)}</p>
       </div>
       <button type="button" class="btn-delete" data-id="${u.id}">Delete</button>
@@ -42,12 +43,13 @@ function renderList() {
   container.querySelectorAll(".btn-delete").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const id = btn.dataset.id;
-      const item = getUserUploads(session.email).find((u) => u.id === id);
+      const currentUploads = await getUserUploads(session.email);
+      const item = currentUploads.find((u) => u.id === id);
       if (!item) return;
       const yes = await customConfirm("Confirm Deletion", `Are you sure you want to delete "${item.title}"? This action cannot be undone.`);
       if (!yes) return;
-      deleteUpload(id, session.email);
-      renderList();
+      await deleteUpload(id, session.email);
+      await renderList();
     });
   });
 }
@@ -63,7 +65,7 @@ fileInput.addEventListener("change", () => {
   }
 });
 
-document.getElementById("uploadForm").addEventListener("submit", (e) => {
+document.getElementById("uploadForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const title = document.getElementById("uploadTitle").value.trim();
@@ -75,21 +77,28 @@ document.getElementById("uploadForm").addEventListener("submit", (e) => {
 
   if (!title || !subject || !college || !year || !semester || !file) return;
 
-  addUpload({
-    title,
-    subject,
-    college,
-    year,
-    semester,
-    uploaderEmail: session.email,
-    uploaderName: session.name,
-    fileName: file.name
-  });
+  try {
+    const uploadResult = await uploadToCloudinary(file);
+    const fileUrl = uploadResult.url;
 
-  logUpload(session.email, title);
-  e.target.reset();
-  fileLabel.textContent = "Choose a file (PDF, JPG, PNG)";
-  renderList();
+    await addUpload({
+      title,
+      subject,
+      college,
+      year: parseInt(year),
+      semester: parseInt(semester),
+      examType: "End Semester",
+      fileName: file.name,
+      fileUrl: fileUrl
+    });
+
+    await logUpload(session.email, title);
+    e.target.reset();
+    fileLabel.textContent = "Choose a file (PDF, JPG, PNG)";
+    await renderList();
+  } catch (err) {
+    await customAlert("Upload Failed", "Failed to upload file to Cloudinary. Please check configuration.");
+  }
 });
 
 renderList();

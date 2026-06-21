@@ -28,7 +28,7 @@ function renderResults(results) {
     <div class="result-card">
       <div class="result-card-head">
         <h3>${escapeHtml(u.title)}</h3>
-        <span class="result-badge">${escapeHtml(u.year)} • Sem ${escapeHtml(String(u.semester))}</span>
+        <span class="result-badge">${escapeHtml(String(u.year))} • Sem ${escapeHtml(String(u.semester))}</span>
       </div>
       <div class="result-meta">
         <p><strong>Subject:</strong> ${escapeHtml(u.subject)}</p>
@@ -43,11 +43,15 @@ function renderResults(results) {
   container.querySelectorAll(".btn-download").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const id = btn.dataset.id;
-      const item = incrementDownload(id);
+      const item = await incrementDownload(id);
       if (!item) return;
-      logDownload(session.email, item.title);
-      await customAlert("Download Started", `Downloading "${item.fileName}" — this is a demo file with no real storage behind it.`);
-      renderResults(searchUploads(getFilters()));
+      await logDownload(session.email, item.title);
+      await customAlert("Download Started", `Downloading "${item.fileName}" from secure storage.`);
+      if (item.fileUrl) {
+        window.open(item.fileUrl, "_blank");
+      }
+      const currentResults = await searchUploads(getFilters());
+      renderResults(currentResults);
     });
   });
 }
@@ -63,9 +67,15 @@ function getFilters() {
   };
 }
 
-document.getElementById("searchForm").addEventListener("submit", (e) => {
+document.getElementById("searchForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-  renderResults(searchUploads(getFilters()));
+  const results = await searchUploads(getFilters());
+  renderResults(results);
 });
 
-renderResults(searchUploads({}));
+async function init() {
+  const results = await searchUploads({});
+  renderResults(results);
+}
+
+init();

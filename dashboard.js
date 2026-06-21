@@ -12,17 +12,18 @@ import {
 const session = initAppShell("dashboard");
 if (!session) throw new Error("auth");
 
-function renderStats() {
-  const stats = getUserStats(session.email);
+async function renderStats() {
+  const stats = await getUserStats(session.email);
   document.getElementById("statUploads").textContent = stats.totalUploads;
   document.getElementById("statDownloads").textContent = stats.downloads;
   document.getElementById("statPoints").textContent = stats.points;
   document.getElementById("statSubjects").textContent = stats.subjectsCovered;
 }
 
-function renderRecentUploads() {
+async function renderRecentUploads() {
   const list = document.getElementById("recentUploadsList");
-  const uploads = getUserUploads(session.email).slice(0, 4);
+  const userUploads = await getUserUploads(session.email);
+  const uploads = userUploads.slice(0, 4);
 
   if (!uploads.length) {
     list.innerHTML = `<li class="upload-empty">No uploads yet. <a href="my-uploads.html">Upload your first PYQ</a></li>`;
@@ -40,16 +41,17 @@ function renderRecentUploads() {
   `).join("");
 }
 
-function renderActivity() {
+async function renderActivity() {
   const container = document.getElementById("activityFeed");
-  const activities = getActivities(session.email).slice(0, 5);
+  const activities = await getActivities(session.email);
+  const recent = activities.slice(0, 5);
 
-  if (!activities.length) {
+  if (!recent.length) {
     container.innerHTML = `<p class="activity-empty">No recent activity yet.</p>`;
     return;
   }
 
-  container.innerHTML = activities.map((a) => {
+  container.innerHTML = recent.map((a) => {
     const meta = activityIcon(a.type);
     return `
       <div class="activity-item">

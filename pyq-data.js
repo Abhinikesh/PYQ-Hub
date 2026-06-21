@@ -1,193 +1,144 @@
-const UPLOADS_KEY = "pyq_uploads";
-const ACTIVITIES_KEY = "pyq_activities";
-const FORUM_KEY = "pyq_forum_posts";
-const RESOURCES_KEY = "pyq_resources";
-const SEED_FLAG = "pyq_seeded";
+import { getToken } from "./auth.js";
 
-function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-}
-
-function load(key) {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
+function getHeaders(extraHeaders = {}) {
+  const token = getToken();
+  const headers = { ...extraHeaders };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
   }
+  return headers;
 }
 
-function save(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
-}
-
-function hoursAgo(h) {
-  return new Date(Date.now() - h * 60 * 60 * 1000).toISOString();
-}
-
-function daysAgo(d) {
-  return new Date(Date.now() - d * 24 * 60 * 60 * 1000).toISOString();
-}
-
-function seedData() {
-  if (localStorage.getItem(SEED_FLAG)) return;
-
-  const uploads = [
-    {
-      id: uid(),
-      title: "DSA PYQ 2025",
-      subject: "Data Structures",
-      college: "Manav Rachna University",
-      year: "2025",
-      semester: "3",
-      uploaderEmail: "seed@pyqhub.local",
-      uploaderName: "Student User",
-      uploadDate: hoursAgo(2),
-      downloadCount: 9,
-      fileName: "dsa-pyq-2025.pdf"
-    },
-    {
-      id: uid(),
-      title: "PYTHON Notes Unit 3",
-      subject: "Python Programming",
-      college: "Manav Rachna University",
-      year: "2025",
-      semester: "2",
-      uploaderEmail: "seed@pyqhub.local",
-      uploaderName: "Student User",
-      uploadDate: daysAgo(1),
-      downloadCount: 6,
-      fileName: "python-notes-unit3.pdf"
-    },
-    {
-      id: uid(),
-      title: "Mathematics Solutions 2024",
-      subject: "Mathematics",
-      college: "IIT Delhi",
-      year: "2024",
-      semester: "4",
-      uploaderEmail: "seed@pyqhub.local",
-      uploaderName: "Student User",
-      uploadDate: daysAgo(3),
-      downloadCount: 23,
-      fileName: "math-solutions-2024.pdf"
-    },
-    {
-      id: uid(),
-      title: "OOP's Practical file",
-      subject: "Object Oriented Programming",
-      college: "Manav Rachna University",
-      year: "2024",
-      semester: "5",
-      uploaderEmail: "seed@pyqhub.local",
-      uploaderName: "Student User",
-      uploadDate: daysAgo(7),
-      downloadCount: 15,
-      fileName: "oops-practical.pdf"
-    }
-  ];
-
-  const forum = [
-    {
-      id: uid(),
-      authorEmail: "seed@pyqhub.local",
-      authorName: "Student User",
-      title: "How to prepare for semester exams?",
-      body: "Any good strategies or resources you guys follow?",
-      createdAt: daysAgo(2)
-    }
-  ];
-
-  const resources = [
-    {
-      id: uid(),
-      title: "DBMS PYQ - 2024.pdf",
-      fileName: "dbms-pyq-2024.pdf",
-      uploaderEmail: "seed@pyqhub.local",
-      uploaderName: "Student User",
-      uploadDate: daysAgo(5),
-      isDemo: true
-    },
-    {
-      id: uid(),
-      title: "C Programming Notes",
-      fileName: "c-programming-notes.pdf",
-      uploaderEmail: "seed@pyqhub.local",
-      uploaderName: "Student User",
-      uploadDate: daysAgo(10),
-      isDemo: true
-    }
-  ];
-
-  save(UPLOADS_KEY, uploads);
-  save(FORUM_KEY, forum);
-  save(RESOURCES_KEY, resources);
-  save(ACTIVITIES_KEY, []);
-  localStorage.setItem(SEED_FLAG, "1");
-}
-
-seedData();
-
-export function getAllUploads() {
-  return load(UPLOADS_KEY).sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate));
-}
-
-export function getUserUploads(email) {
-  const normalized = email.toLowerCase();
-  return getAllUploads().filter((u) => u.uploaderEmail === normalized);
-}
-
-export function getUploadById(id) {
-  return getAllUploads().find((u) => u.id === id) || null;
-}
-
-export function addUpload(entry) {
-  const uploads = getAllUploads();
-  const item = { id: uid(), downloadCount: 0, uploadDate: new Date().toISOString(), ...entry };
-  uploads.unshift(item);
-  save(UPLOADS_KEY, uploads);
-  return item;
-}
-
-export function deleteUpload(id, userEmail) {
-  const uploads = getAllUploads();
-  const item = uploads.find((u) => u.id === id);
-  if (!item || item.uploaderEmail !== userEmail.toLowerCase()) return false;
-  save(UPLOADS_KEY, uploads.filter((u) => u.id !== id));
-  return true;
-}
-
-export function incrementDownload(id) {
-  const uploads = getAllUploads();
-  const item = uploads.find((u) => u.id === id);
+const mapItem = (item) => {
   if (!item) return null;
-  item.downloadCount += 1;
-  save(UPLOADS_KEY, uploads);
-  return item;
+  return {
+    id: item._id,
+    title: item.title,
+    subject: item.subject,
+    college: item.college,
+    year: item.year,
+    semester: item.semester,
+    examType: item.examType,
+    fileName: item.fileName,
+    fileUrl: item.fileUrl,
+    uploaderEmail: item.uploadedByEmail || item.uploaderEmail,
+    uploaderName: item.uploadedByName || item.uploaderName,
+    uploadDate: item.uploadDate,
+    downloadCount: item.downloadCount || 0,
+    likes: item.likes || 0,
+    status: item.status
+  };
+};
+
+const mapForum = (post) => {
+  if (!post) return null;
+  return {
+    id: post._id,
+    authorEmail: post.authorEmail,
+    authorName: post.authorName,
+    title: post.title,
+    body: post.body,
+    createdAt: post.createdAt
+  };
+};
+
+const mapResource = (resource) => {
+  if (!resource) return null;
+  return {
+    id: resource._id,
+    title: resource.title,
+    fileName: resource.fileName,
+    uploaderEmail: resource.uploaderEmail,
+    uploaderName: resource.uploaderName,
+    uploadDate: resource.uploadDate,
+    isDemo: resource.isDemo
+  };
+};
+
+const mapActivity = (activity) => {
+  if (!activity) return null;
+  return {
+    id: activity._id,
+    userEmail: activity.userEmail,
+    type: activity.type,
+    message: activity.message,
+    timestamp: activity.timestamp
+  };
+};
+
+export async function getAllUploads() {
+  const response = await fetch("/api/uploads", {
+    headers: getHeaders()
+  });
+  if (!response.ok) return [];
+  const items = await response.json();
+  return items.map(mapItem);
 }
 
-export function searchUploads(filters) {
-  let results = getAllUploads();
-  if (filters.college) {
-    results = results.filter((u) => u.college === filters.college);
-  }
-  if (filters.subject) {
-    const q = filters.subject.toLowerCase();
-    results = results.filter((u) =>
-      u.subject.toLowerCase().includes(q) || u.title.toLowerCase().includes(q)
-    );
-  }
-  if (filters.year) {
-    results = results.filter((u) => String(u.year) === String(filters.year));
-  }
-  if (filters.semester) {
-    results = results.filter((u) => String(u.semester) === String(filters.semester));
-  }
-  return results;
+export async function getUserUploads(email) {
+  const uploads = await getAllUploads();
+  const normalized = email.toLowerCase();
+  return uploads.filter((u) => u.uploaderEmail === normalized);
 }
 
-export function getUserStats(email) {
-  const uploads = getUserUploads(email);
+export async function getUploadById(id) {
+  const response = await fetch("/api/uploads", {
+    headers: getHeaders()
+  });
+  if (!response.ok) return null;
+  const items = await response.json();
+  const found = items.find(u => u._id === id);
+  return found ? mapItem(found) : null;
+}
+
+export async function addUpload(entry) {
+  const response = await fetch("/api/uploads", {
+    method: "POST",
+    headers: getHeaders({ "Content-Type": "application/json" }),
+    body: JSON.stringify(entry)
+  });
+  if (!response.ok) throw new Error("Failed to add upload");
+  const item = await response.json();
+  return mapItem(item);
+}
+
+export async function deleteUpload(id, userEmail) {
+  const response = await fetch(`/api/uploads/${id}`, {
+    method: "DELETE",
+    headers: getHeaders()
+  });
+  if (!response.ok) return false;
+  const result = await response.json();
+  return result.success;
+}
+
+export async function incrementDownload(id) {
+  const response = await fetch(`/api/uploads/${id}/download`, {
+    method: "POST",
+    headers: getHeaders()
+  });
+  if (!response.ok) return null;
+  const item = await response.json();
+  return mapItem(item);
+}
+
+export async function searchUploads(filters) {
+  const params = new URLSearchParams();
+  if (filters.college) params.append("college", filters.college);
+  if (filters.subject) params.append("subject", filters.subject);
+  if (filters.year) params.append("year", filters.year);
+  if (filters.semester) params.append("semester", filters.semester);
+
+  const response = await fetch(`/api/uploads?${params.toString()}`, {
+    headers: getHeaders()
+  });
+  if (!response.ok) return [];
+  const items = await response.json();
+  return items.map(mapItem);
+}
+
+export async function getUserStats(email) {
+  const uploads = await getUserUploads(email);
   const totalDownloads = uploads.reduce((sum, u) => sum + (u.downloadCount || 0), 0);
   const subjects = new Set(uploads.map((u) => u.subject.toLowerCase()));
   const points = uploads.length * 10 + totalDownloads * 2;
@@ -199,72 +150,77 @@ export function getUserStats(email) {
   };
 }
 
-export function getActivities(email) {
-  return load(ACTIVITIES_KEY)
-    .filter((a) => a.userEmail === email.toLowerCase())
-    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-}
-
-export function addActivity(email, type, message) {
-  const activities = load(ACTIVITIES_KEY);
-  activities.unshift({
-    id: uid(),
-    userEmail: email.toLowerCase(),
-    type,
-    message,
-    timestamp: new Date().toISOString()
+export async function getActivities(email) {
+  const response = await fetch("/api/activities", {
+    headers: getHeaders()
   });
-  if (activities.length > 50) activities.length = 50;
-  save(ACTIVITIES_KEY, activities);
+  if (!response.ok) return [];
+  const items = await response.json();
+  return items.map(mapActivity);
 }
 
-export function logDownload(email, title) {
-  addActivity(email, "download", `Downloaded ${title}`);
+export async function addActivity(email, type, message) {
+  const response = await fetch("/api/activities", {
+    method: "POST",
+    headers: getHeaders({ "Content-Type": "application/json" }),
+    body: JSON.stringify({ type, message })
+  });
+  if (!response.ok) return null;
+  const item = await response.json();
+  return mapActivity(item);
 }
 
-export function logUpload(email, title) {
-  addActivity(email, "upload", `Uploaded ${title}`);
-  addActivity(email, "points", "Earned 10 points");
+export async function logDownload(email, title) {
+  await addActivity(email, "download", `Downloaded ${title}`);
 }
 
-export function logAiUse(email) {
-  addActivity(email, "ai", "Used AI Assistant");
+export async function logUpload(email, title) {
+  await addActivity(email, "upload", `Uploaded ${title}`);
+  await addActivity(email, "points", "Earned 10 points");
 }
 
-export function getForumPosts() {
-  return load(FORUM_KEY).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+export async function logAiUse(email) {
+  await addActivity(email, "ai", "Used AI Assistant");
 }
 
-export function addForumPost(authorEmail, authorName, title, body) {
-  const posts = load(FORUM_KEY);
-  const post = {
-    id: uid(),
-    authorEmail: authorEmail.toLowerCase(),
-    authorName,
-    title,
-    body,
-    createdAt: new Date().toISOString()
-  };
-  posts.unshift(post);
-  save(FORUM_KEY, posts);
-  return post;
+export async function getForumPosts() {
+  const response = await fetch("/api/forum", {
+    headers: getHeaders()
+  });
+  if (!response.ok) return [];
+  const items = await response.json();
+  return items.map(mapForum);
 }
 
-export function getResources() {
-  return load(RESOURCES_KEY).sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate));
+export async function addForumPost(authorEmail, authorName, title, body) {
+  const response = await fetch("/api/forum", {
+    method: "POST",
+    headers: getHeaders({ "Content-Type": "application/json" }),
+    body: JSON.stringify({ title, body })
+  });
+  if (!response.ok) throw new Error("Failed to add forum post");
+  const item = await response.json();
+  return mapForum(item);
 }
 
-export function addResource(entry) {
-  const resources = load(RESOURCES_KEY);
-  const item = {
-    id: uid(),
-    uploadDate: new Date().toISOString(),
-    isDemo: false,
-    ...entry
-  };
-  resources.unshift(item);
-  save(RESOURCES_KEY, resources);
-  return item;
+export async function getResources() {
+  const response = await fetch("/api/resources", {
+    headers: getHeaders()
+  });
+  if (!response.ok) return [];
+  const items = await response.json();
+  return items.map(mapResource);
+}
+
+export async function addResource(entry) {
+  const response = await fetch("/api/resources", {
+    method: "POST",
+    headers: getHeaders({ "Content-Type": "application/json" }),
+    body: JSON.stringify(entry)
+  });
+  if (!response.ok) throw new Error("Failed to add resource");
+  const item = await response.json();
+  return mapResource(item);
 }
 
 export function formatRelativeTime(iso) {

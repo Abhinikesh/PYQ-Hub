@@ -1,6 +1,7 @@
 import {
   redirectIfLoggedIn,
   attemptLogin,
+  attemptGoogleLogin,
   isValidEmail,
   getRedirectTarget
 } from "./auth.js";
@@ -29,7 +30,42 @@ document.addEventListener("DOMContentLoaded", () => {
       : "signup.html";
   }
 
-  form.addEventListener("submit", (e) => {
+  fetch("/api/config")
+    .then(res => res.json())
+    .then(data => {
+      const clientId = data.googleClientId;
+      if (clientId && clientId !== "your-google-client-id-here" && window.google) {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: async (response) => {
+            const result = await attemptGoogleLogin(response.credential);
+            if (result.ok) {
+              showAuthSuccess(card, "Welcome back!", () => {
+                window.location.href = getRedirectTarget();
+              });
+            } else {
+              showFormError(form, "Google authentication failed.");
+            }
+          }
+        });
+        const googleBtn = document.getElementById("googleBtn");
+        if (googleBtn) {
+          window.google.accounts.id.renderButton(googleBtn, {
+            theme: "outline",
+            size: "large",
+            width: googleBtn.offsetWidth || 340
+          });
+        }
+      } else {
+        const sep = document.querySelector(".google-auth-separator");
+        if (sep) sep.style.display = "none";
+        const btn = document.getElementById("googleBtn");
+        if (btn) btn.style.display = "none";
+      }
+    })
+    .catch(() => {});
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     clearFormErrors(form);
 
@@ -57,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!valid) return;
 
-    const result = attemptLogin(email, password, remember);
+    const result = await attemptLogin(email, password, remember);
 
     if (!result.ok) {
       showFormError(form, "Invalid email or password.");

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="loginsignup.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body class="auth-page">
 
@@ -51,6 +52,11 @@
 
           <button type="submit" class="btn-auth">Sign In</button>
         </form>
+
+        <div class="google-auth-separator">
+          <span>or</span>
+        </div>
+        <div id="googleBtn" class="google-auth-btn"></div>
 
         <p class="auth-switch">Don't have an account? <a href="signup.html" id="signupLink">Sign up</a></p>
       </div>

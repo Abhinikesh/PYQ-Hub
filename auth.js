@@ -1,27 +1,4 @@
-const USERS_KEY = "pyq_users";
 const SESSION_KEY = "pyq_session";
-
-export function getUsers() {
-  try {
-    const raw = localStorage.getItem(USERS_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveUsers(users) {
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
-}
-
-export function findUserByEmail(email) {
-  const normalized = email.trim().toLowerCase();
-  return getUsers().find((u) => u.email === normalized) || null;
-}
-
-export function emailExists(email) {
-  return !!findUserByEmail(email);
-}
 
 export function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -41,11 +18,17 @@ export function getSession() {
   return null;
 }
 
-export function setSession({ name, email }, remember = true) {
+export function getToken() {
+  const session = getSession();
+  return session ? session.token : null;
+}
+
+export function setSession({ name, email, token }, remember = true) {
   const session = {
     loggedIn: true,
     email: email.trim().toLowerCase(),
-    name: name.trim()
+    name: name.trim(),
+    token
   };
 
   localStorage.removeItem(SESSION_KEY);
@@ -65,35 +48,55 @@ export function clearSession() {
   sessionStorage.removeItem(SESSION_KEY);
 }
 
-export function registerUser(name, email, password) {
-  const users = getUsers();
-  const normalizedEmail = email.trim().toLowerCase();
-  const newUser = {
-    name: name.trim(),
-    email: normalizedEmail,
-    password
-  };
-  users.push(newUser);
-  saveUsers(users);
-  return newUser;
-}
-
-export function attemptLogin(email, password, remember = true) {
-  const user = findUserByEmail(email);
-  if (!user || user.password !== password) {
+export async function attemptLogin(email, password, remember = true) {
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+    if (!response.ok) return { ok: false };
+    const data = await response.json();
+    const session = setSession(data, remember);
+    return { ok: true, session };
+  } catch {
     return { ok: false };
   }
-  const session = setSession(user, remember);
-  return { ok: true, session };
 }
 
-export function attemptSignup(name, email, password) {
-  if (emailExists(email)) {
-    return { ok: false, reason: "exists" };
+export async function attemptSignup(name, email, password) {
+  try {
+    const response = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password })
+    });
+    if (!response.ok) {
+      const err = await response.json();
+      return { ok: false, reason: err.error };
+    }
+    const data = await response.json();
+    const session = setSession(data, true);
+    return { ok: true, session };
+  } catch {
+    return { ok: false, reason: "server" };
   }
-  const user = registerUser(name, email, password);
-  const session = setSession(user, true);
-  return { ok: true, session };
+}
+
+export async function attemptGoogleLogin(idToken, remember = true) {
+  try {
+    const response = await fetch("/api/auth/google", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken })
+    });
+    if (!response.ok) return { ok: false };
+    const data = await response.json();
+    const session = setSession(data, remember);
+    return { ok: true, session };
+  } catch {
+    return { ok: false };
+  }
 }
 
 export function logout() {

@@ -1,20 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { uploadToCloudinary } from './cloudinary-config.js';
 import { getSession, customAlert } from './auth.js';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAqnBAa5Y0JEbuFohgn6jS9gWvl3JGWors",
-  authDomain: "pyq-hub-fb3bb.firebaseapp.com",
-  projectId: "pyq-hub-fb3bb",
-  storageBucket: "pyq-hub-fb3bb.firebasestorage.app",
-  messagingSenderId: "5765004016",
-  appId: "1:5765004016:web:fb7b745a6b64f27ada6035",
-  measurementId: "G-VGRQNKZD0P"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+import { addUpload, logUpload } from './pyq-data.js';
 
 function getCurrentUser() {
   const session = getSession();
@@ -153,33 +139,20 @@ async function handleUpload(e) {
     
     console.log('Cloudinary upload successful:', cloudinaryResult);
 
-    const pyqData = {
+    console.log('Saving to MongoDB via Express API...');
+
+    await addUpload({
       title: title,
-      description: description,
-      college: college,
-      course: course,
       subject: subject,
+      college: college === 'Other' ? document.getElementById('college-custom').value : college,
       year: parseInt(year),
       semester: parseInt(semester),
       examType: examType,
       fileName: file.name,
-      fileSize: file.size,
-      fileType: file.type,
-      fileUrl: cloudinaryResult.url,
-      publicId: cloudinaryResult.publicId,
-      uploadedBy: currentUser.uid,
-      uploadedByEmail: currentUser.email,
-      uploadDate: serverTimestamp(),
-      downloads: 0,
-      likes: 0,
-      status: 'pending'
-    };
-
-    console.log('Saving to Firestore:', pyqData);
-
-    const docRef = await addDoc(collection(db, 'pyqs'), pyqData);
+      fileUrl: cloudinaryResult.url
+    });
     
-    console.log('Document written with ID: ', docRef.id);
+    await logUpload(currentUser.email, title);
     
     await customAlert('Upload Successful', 'PYQ uploaded successfully! It will be reviewed and made available soon.');
     
@@ -187,24 +160,12 @@ async function handleUpload(e) {
     
   } catch (error) {
     console.error('Upload error:', error);
-    console.error('Error details:', {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
-    });
     
     let errorMessage = 'Upload failed: ';
-    
     if (error.message.includes('File size')) {
       errorMessage += 'File is too large. Maximum size is 10MB.';
     } else if (error.message.includes('File type')) {
       errorMessage += 'Invalid file type. Please use PDF, JPG, or PNG files.';
-    } else if (error.message.includes('Upload failed: 400')) {
-      errorMessage += 'Invalid upload preset. Please check Cloudinary configuration.';
-    } else if (error.message.includes('Upload failed: 401')) {
-      errorMessage += 'Unauthorized. Please check Cloudinary credentials.';
-    } else if (error.message.includes('Upload failed: 413')) {
-      errorMessage += 'File is too large for Cloudinary.';
     } else {
       errorMessage += error.message;
     }
@@ -214,45 +175,6 @@ async function handleUpload(e) {
     uploadBtn.disabled = false;
     uploadText.style.display = 'block';
     uploadLoading.style.display = 'none';
-  }
-}
-
-async function searchPYQs(filters = {}) {
-  try {
-    let q = collection(db, 'pyqs');
-    
-    if (filters.college) {
-      q = query(q, where('college', '==', filters.college));
-    }
-    if (filters.subject) {
-      q = query(q, where('subject', '==', filters.subject));
-    }
-    if (filters.year) {
-      q = query(q, where('year', '==', parseInt(filters.year)));
-    }
-    if (filters.semester) {
-      q = query(q, where('semester', '==', parseInt(filters.semester)));
-    }
-    if (filters.course) {
-      q = query(q, where('course', '==', filters.course));
-    }
-    
-    q = query(q, orderBy('uploadDate', 'desc'));
-    
-    const querySnapshot = await getDocs(q);
-    const results = [];
-    
-    querySnapshot.forEach((doc) => {
-      results.push({
-        id: doc.id,
-        ...doc.data()
-      });
-    });
-    
-    return results;
-  } catch (error) {
-    console.error('Search error:', error);
-    throw error;
   }
 }
 
@@ -275,5 +197,3 @@ document.addEventListener('keydown', function(e) {
     closeUploadModal();
   }
 });
-
-window.searchPYQs = searchPYQs;
