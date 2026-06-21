@@ -4,16 +4,28 @@
 
 ### *Smart PYQ & Notes Sharing Platform*
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-abhinikesh.github.io-3B82F6?style=for-the-badge)](https://abhinikesh.github.io)
-[![GitHub Stars](https://img.shields.io/github/stars/abhinikesh/pyq-hub?style=for-the-badge&color=FFD700)](https://github.com/abhinikesh/pyq-hub)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-View_Site-3B82F6?style=for-the-badge)](https://abhinikesh.github.io/PYQ-Hub/)
+[![GitHub Stars](https://img.shields.io/github/stars/Abhinikesh/PYQ-Hub?style=for-the-badge&color=FFD700)](https://github.com/Abhinikesh/PYQ-Hub)
 [![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
-[![Made with React](https://img.shields.io/badge/Made%20with-React-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org)
+[![Made with HTML CSS JS](https://img.shields.io/badge/Made%20with-HTML%20%2F%20CSS%20%2F%20JS-E34F26?style=for-the-badge&logo=html5)](https://abhinikesh.github.io/PYQ-Hub/)
 
 <br/>
 
-> A centralized, AI-powered platform for students to upload, discover, and share Previous Year Questions and study notes — with rewards for contributing to your academic community.
+> Find past papers by college, subject, and year. Upload what you have, discover what you need, and earn rewards for helping your batch.
+
+**🔗 Live Site:** [abhinikesh.github.io/PYQ-Hub](https://abhinikesh.github.io/PYQ-Hub/)
 
 <br/>
+
+</div>
+
+<!-- 
+Add screenshots here once ready, for example:
+![Landing Page](./screenshots/landing.png)
+![Dashboard](./screenshots/dashboard.png)
+![Search PYQs](./screenshots/search.png)
+![Community](./screenshots/community.png)
+-->
 
 ---
 
@@ -21,68 +33,79 @@
 
 | Feature | Description |
 |---------|-------------|
-| 📤 **Upload & Earn** | Share PYQs and notes to earn points, badges, or cash rewards |
-| 🔍 **Advanced Search** | Filter by college, subject, year, semester, and exam type |
-| 🤖 **AI Study Assistant** | Ask doubts, get summaries, and plan studies with AI help |
-| 👥 **Community Driven** | Forum for students to post questions and share resources |
-| 🏆 **Rewards & Badges** | Earn points and unlock badges as you contribute |
-| 📅 **Upcoming Events** | Stay updated with hackathons, workshops, and academic events |
-| 🌙 **Dark / Light Mode** | Comfortable reading in any environment |
+| 📤 **Upload & Earn** | Share PYQs and notes to earn points, badges, and recognition in your college community |
+| 🔍 **Advanced Search** | Filter by college, subject, year, and semester to find exactly the paper you need |
+| 🤖 **AI Study Assistant** | Floating assistant for study tips, finding PYQs, organizing notes, and exam prep |
+| 👥 **Community Driven** | Forum to post questions, share resources, and discover study tips together |
+| 🏆 **Rewards & Badges** | Earn points and unlock badges as you contribute — the more you share, the more you gain |
+| 📅 **Upcoming Events** | Stay updated on workshops, hackathons, and academic events |
 
 ---
 
-## 📊 Dashboard Overview
+## 🖥️ Pages & Functionality
 
-Once logged in, students get a personal dashboard showing:
-
-- **Total Uploads** — all PYQs and notes contributed
-- **Downloads** — how many times your content was accessed
-- **Points Earned** — reward points from contributions
-- **Subjects Covered** — breadth of your academic contributions
-- **Search PYQs** — filter by college, subject, year & semester inline
-- **My Uploads** — manage and track your uploaded content
+| Page | What it does |
+|------|---------------|
+| **Home** | Landing page with hero, feature highlights, and call-to-action |
+| **Login / Sign Up** | Real client-side authentication with validation, error states, and persistent sessions |
+| **Dashboard** | Personal stats (uploads, downloads, points, subjects), recent uploads, recent activity, and quick actions |
+| **Search PYQs** | Filter by college, subject, year, and semester with live results and empty-state handling |
+| **My Uploads** | Upload new PYQs/notes and manage everything you've shared |
+| **Community** | Forum for questions, a shared resources board, and upcoming events |
+| **AI Study Assistant** | Floating widget available across the app, present consistently on every logged-in page |
 
 ---
 
 ## 📤 How to Upload a PYQ
 
-1. Click **Upload PYQ** from the navbar or dashboard
-2. Fill in the details:
-   - **Title** — descriptive name of the paper
-   - **College** — select your institution
-   - **Course** — e.g., B.Tech, M.Sc
-   - **Subject** — e.g., Data Structures
-   - **Year & Semester** — when the exam was held
-   - **Exam Type** — Mid Semester / End Semester
-3. Attach the file (JPG, PNG, PDF — max 10MB)
-4. Submit and earn points! 🎉
+1. Go to **My Uploads** from the sidebar
+2. Fill in the details — Title, Subject, College, Year, Semester
+3. Attach a file (PDF, JPG, PNG)
+4. Click **Upload PYQ** and earn points 🎉
 
 ---
 
 ## 🔍 Search & Filter
 
-Search PYQs with powerful filters:
-College  →  All Colleges / IIT Madras / Manav Rachna / ...
+College  →  All Colleges / select a specific college
+
 Subject  →  e.g., Physics, Data Structures, DBMS
-Year     →  All Years / 2021 / 2022 / 2023 / 2024
+
+Year     →  All Years / specific year
+
 Semester →  All Semesters / Sem 1–8
+
+If nothing matches, the page shows a clean "No results found, try adjusting your filters" state instead of leaving you guessing.
 
 ---
 
 ## 👥 Community Features
 
-- **Forum** — post questions and get answers from peers
-- **Shared Resources** — upload and browse study files directly
-- **Upcoming Events** — workshops, hackathons, coding challenges
+- **Forum** — post a question, add details, and get it visible to everyone instantly
+- **Shared Resources** — upload a file with a title and have it show up in the shared list
+- **Upcoming Events** — workshops, hackathons, and coding challenges, always up to date
 
 ---
 
 ## 🤖 AI Study Assistant
 
-The floating **AI Study Assistant** widget lets you:
-- Ask subject-specific doubts
-- Get quick summaries of topics
-- Plan your exam preparation schedule
+A floating chat widget available on every logged-in page with quick actions:
+
+- 💡 Study Tips
+- 🔍 Find PYQs
+- 📁 Organize
+- 📝 Exam Prep
+
+Chat history persists per user, so picking up where you left off just works.
+
+---
+
+## 🔐 Authentication
+
+- Email/password signup with proper validation (name, email format, password length)
+- Duplicate-account detection with inline error messages, no jarring browser popups
+- "Remember me" toggle — stays signed in across sessions, or clears when the browser closes
+- Protected pages automatically redirect logged-out users to Login, and redirect logged-in users away from Login/Sign Up back to their Dashboard
 
 ---
 
@@ -101,13 +124,22 @@ The floating **AI Study Assistant** widget lets you:
 
 | Layer | Technology |
 |-------|-----------|
-| **Frontend** | React, Vite |
-| **Styling** | CSS / Tailwind CSS |
-| **State** | Redux Toolkit / Context API |
-| **AI Widget** | Claude API / OpenAI |
-| **Auth** | Firebase / JWT |
-| **Storage** | Firebase Storage / Supabase |
+| **Frontend** | HTML5, CSS3, Vanilla JavaScript |
+| **Data Storage** | Browser LocalStorage (simulated backend, no server required) |
 | **Hosting** | GitHub Pages |
+
+> 🚧 Currently a fully static frontend project with a simulated data layer. A real backend (Node/Express) and database are planned for a future update.
+
+---
+
+## 🚀 Getting Started Locally
+
+```bash
+git clone https://github.com/Abhinikesh/PYQ-Hub.git
+cd PYQ-Hub
+```
+
+Then just open `index.html` in your browser — no build step, no installs needed.
 
 ---
 
@@ -121,7 +153,7 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 **Team 🔥 CyberPunks**
 
-[![GitHub](https://img.shields.io/badge/GitHub-abhinikesh-181717?style=flat-square&logo=github)](https://github.com/abhinikesh)
+[![GitHub](https://img.shields.io/badge/GitHub-Abhinikesh-181717?style=flat-square&logo=github)](https://github.com/Abhinikesh)
 
 ---
 
@@ -131,6 +163,6 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 *Helping students ace their exams, one paper at a time* 🎓
 
-⭐ Found it useful? Give us a star — it helps a lot!
+⭐ Found it useful? Give it a star — it helps a lot!
 
 </div>
