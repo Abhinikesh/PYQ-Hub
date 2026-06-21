@@ -1,4 +1,5 @@
 import { initAppShell } from "./app-shell.js";
+import { customAlert } from "./auth.js";
 import {
   searchUploads,
   incrementDownload,
@@ -40,12 +41,12 @@ function renderResults(results) {
   `).join("");
 
   container.querySelectorAll(".btn-download").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       const id = btn.dataset.id;
       const item = incrementDownload(id);
       if (!item) return;
       logDownload(session.email, item.title);
-      alert(`Downloading "${item.fileName}" — this is a demo file with no real storage behind it.`);
+      await customAlert("Download Started", `Downloading "${item.fileName}" — this is a demo file with no real storage behind it.`);
       renderResults(searchUploads(getFilters()));
     });
   });

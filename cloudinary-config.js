@@ -1,24 +1,20 @@
-// Cloudinary Configuration
 const cloudinaryConfig = {
-  cloudName: 'diwacmg02', // Replace with your Cloudinary cloud name
-  uploadPreset: 'pyq-uploads', // Create this in Cloudinary dashboard
-  apiKey: 'br7p8-uEiK3HCdBoVwtYvbzvPx4', // Optional for client-side uploads
-  maxFileSize: 10 * 1024 * 1024, // 10MB limit
+  cloudName: 'diwacmg02',
+  uploadPreset: 'pyq-uploads',
+  apiKey: 'br7p8-uEiK3HCdBoVwtYvbzvPx4',
+  maxFileSize: 10 * 1024 * 1024,
   allowedFormats: ['pdf', 'jpg', 'jpeg', 'png']
 };
 
-// Cloudinary upload function
 async function uploadToCloudinary(file) {
   console.log('Starting Cloudinary upload for file:', file.name);
   console.log('File size:', file.size, 'bytes');
   console.log('File type:', file.type);
   
-  // Validate file size
   if (file.size > cloudinaryConfig.maxFileSize) {
     throw new Error(`File size (${file.size} bytes) exceeds maximum allowed size (${cloudinaryConfig.maxFileSize} bytes)`);
   }
   
-  // Validate file type
   const fileExtension = file.name.split('.').pop().toLowerCase();
   if (!cloudinaryConfig.allowedFormats.includes(fileExtension)) {
     throw new Error(`File type ${fileExtension} is not allowed. Allowed types: ${cloudinaryConfig.allowedFormats.join(', ')}`);
@@ -66,4 +62,4 @@ async function uploadToCloudinary(file) {
   }
 }
 
-export { uploadToCloudinary, cloudinaryConfig }; 
+export { uploadToCloudinary, cloudinaryConfig };

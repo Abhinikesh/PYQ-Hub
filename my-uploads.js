@@ -1,4 +1,5 @@
 import { initAppShell } from "./app-shell.js";
+import { customConfirm } from "./auth.js";
 import {
   getUserUploads,
   addUpload,
@@ -39,11 +40,12 @@ function renderList() {
   `).join("");
 
   container.querySelectorAll(".btn-delete").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       const id = btn.dataset.id;
       const item = getUserUploads(session.email).find((u) => u.id === id);
       if (!item) return;
-      if (!confirm(`Delete "${item.title}"? This cannot be undone.`)) return;
+      const yes = await customConfirm("Confirm Deletion", `Are you sure you want to delete "${item.title}"? This action cannot be undone.`);
+      if (!yes) return;
       deleteUpload(id, session.email);
       renderList();
     });

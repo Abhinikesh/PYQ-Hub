@@ -1,98 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PYQ Hub - AI Study Assistant</title>
-    <link rel="icon" href="pyq logo.jpg">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="chatbot.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Study Assistant - PYQ Hub</title>
+  <link rel="icon" href="pyq logo.jpg">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="page-back-link">
-        <a href="index.html">
-            <i class="fas fa-arrow-left"></i>
-            Back to PYQ Hub
-        </a>
-    </div>
+  <div class="page-back-link">
+    <a href="dashboard.html">
+      <i class="fas fa-arrow-left"></i>
+      Back to Dashboard
+    </a>
+  </div>
 
-    <div class="floating-chat-btn" id="floatingChatBtn">
-        <i class="fas fa-comments"></i>
-    </div>
-
-    <div class="chatbot-container" id="chatbotContainer">
-        <div class="chatbot-header">
-            <div class="header-content">
-                <div class="bot-info">
-                    <div class="bot-avatar">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div>
-                        <h3>AI Study Assistant</h3>
-                        <div class="status online">Online</div>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <button class="minimize-btn" id="minimizeBtn">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button class="close-btn" id="closeBtn">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="chat-messages" id="chatMessages"></div>
-
-        <div class="typing-indicator" id="typingIndicator">
-            <div class="typing-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-
-        <div class="chat-input-area">
-            <div class="input-container">
-                <textarea 
-                    id="messageInput" 
-                    placeholder="Ask me anything about your studies..."
-                    rows="1"
-                ></textarea>
-                <button class="send-btn" id="sendBtn">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-            <div class="quick-actions">
-                <button class="quick-action" data-action="study-tips">
-                    <i class="fas fa-lightbulb"></i>
-                    Study Tips
-                </button>
-                <button class="quick-action" data-action="find-questions">
-                    <i class="fas fa-search"></i>
-                    Find PYQs
-                </button>
-                <button class="quick-action" data-action="organize">
-                    <i class="fas fa-folder"></i>
-                    Organize
-                </button>
-                <button class="quick-action" data-action="exam-prep">
-                    <i class="fas fa-calendar"></i>
-                    Exam Prep
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script type="module" src="auth-guard.js"></script>
-    <script type="module" src="chatbot-activity.js"></script>
-    <script src="chatbott.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            new Chatbot();
-        });
-    </script>
+  <script type="module" src="auth-guard.js"></script>
+  <script type="module">
+    import { addChatbotToPage } from "./chatbot.js";
+    addChatbotToPage();
+  </script>
 </body>
 </html>

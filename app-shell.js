@@ -1,4 +1,5 @@
 import { getSession, getInitial, logout } from "./auth.js";
+import { addChatbotToPage } from "./chatbot.js";
 
 const pages = {
   dashboard: { href: "dashboard.html", icon: "📊", label: "Dashboard" },
@@ -63,5 +64,23 @@ export function initAppShell(activePage) {
   renderSidebar(activePage);
   renderUserHeader(session);
   initMobileSidebar();
+
+  if (!document.querySelector('link[href="chatbot.css"]')) {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "chatbot.css";
+    document.head.appendChild(link);
+  }
+
+  if (!document.querySelector('link[href*="font-awesome"]')) {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css";
+    document.head.appendChild(link);
+  }
+
+  addChatbotToPage();
+
   return session;
 }
+

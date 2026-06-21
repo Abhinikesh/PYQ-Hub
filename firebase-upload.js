@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { uploadToCloudinary } from './cloudinary-config.js';
-import { getSession } from './auth.js';
+import { getSession, customAlert } from './auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAqnBAa5Y0JEbuFohgn6jS9gWvl3JGWors",
@@ -22,7 +22,6 @@ function getCurrentUser() {
   return { uid: session.email, email: session.email };
 }
 
-// Modal functions
 window.openUploadModal = function() {
   document.getElementById('uploadModal').classList.add('show');
   document.body.style.overflow = 'hidden';
@@ -34,28 +33,24 @@ window.closeUploadModal = function() {
   resetForm();
 };
 
-// File upload handling
 document.addEventListener('DOMContentLoaded', function() {
   const fileInput = document.getElementById('fileInput');
   const fileText = document.getElementById('fileText');
   const fileName = document.getElementById('fileName');
   const fileUpload = document.querySelector('.file-upload');
 
-  // File selection
-  fileInput.addEventListener('change', function(e) {
+  fileInput.addEventListener('change', async function(e) {
     const file = e.target.files[0];
     if (file) {
-      // Validate file size (10MB limit)
       if (file.size > 10 * 1024 * 1024) {
-        alert('File size must be less than 10MB');
+        await customAlert('Upload Error', 'File size must be less than 10MB');
         fileInput.value = '';
         return;
       }
 
-      // Validate file type
       const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
       if (!allowedTypes.includes(file.type)) {
-        alert('Please select a valid file type (JPG, PNG, or PDF)');
+        await customAlert('Upload Error', 'Please select a valid file type (JPG, PNG, or PDF)');
         fileInput.value = '';
         return;
       }
@@ -66,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Drag and drop functionality
   fileUpload.addEventListener('dragover', function(e) {
     e.preventDefault();
     fileUpload.classList.add('dragover');
@@ -77,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fileUpload.classList.remove('dragover');
   });
 
-  fileUpload.addEventListener('drop', function(e) {
+  fileUpload.addEventListener('drop', async function(e) {
     e.preventDefault();
     fileUpload.classList.remove('dragover');
     
@@ -85,16 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (files.length > 0) {
       const file = files[0];
       
-      // Validate file size
       if (file.size > 10 * 1024 * 1024) {
-        alert('File size must be less than 10MB');
+        await customAlert('Upload Error', 'File size must be less than 10MB');
         return;
       }
 
-      // Validate file type
       const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
       if (!allowedTypes.includes(file.type)) {
-        alert('Please select a valid file type (JPG, PNG, or PDF)');
+        await customAlert('Upload Error', 'Please select a valid file type (JPG, PNG, or PDF)');
         return;
       }
 
@@ -105,28 +97,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Form submission
   const uploadForm = document.getElementById('uploadForm');
   uploadForm.addEventListener('submit', handleUpload);
 });
 
-// Upload handling function
 async function handleUpload(e) {
   e.preventDefault();
 
   console.log('Upload form submitted');
 
-  // Check if user is authenticated
   const currentUser = getCurrentUser();
 
   if (!currentUser) {
-    alert('Please log in to upload files');
+    await customAlert('Authentication Required', 'Please log in to upload files');
     return;
   }
 
   console.log('User authenticated:', currentUser.email);
 
-  // Get form data
   const title = document.getElementById('title').value;
   const description = document.getElementById('description').value;
   const college = document.getElementById('college').value;
@@ -144,14 +132,12 @@ async function handleUpload(e) {
     fileType: file?.type
   });
 
-  // Validate required fields
   if (!title || !college || !course || !subject || !year || !semester || !examType || !file) {
-    alert('Please fill in all required fields');
+    await customAlert('Missing Information', 'Please fill in all required fields');
     console.log('Validation failed - missing required fields');
     return;
   }
 
-  // Show loading state
   const uploadBtn = document.getElementById('uploadBtn');
   const uploadText = document.getElementById('uploadText');
   const uploadLoading = document.getElementById('uploadLoading');
@@ -163,12 +149,10 @@ async function handleUpload(e) {
   try {
     console.log('Starting Cloudinary upload...');
     
-    // Upload file to Cloudinary
     const cloudinaryResult = await uploadToCloudinary(file);
     
     console.log('Cloudinary upload successful:', cloudinaryResult);
 
-    // Store metadata in Firestore
     const pyqData = {
       title: title,
       description: description,
@@ -188,7 +172,7 @@ async function handleUpload(e) {
       uploadDate: serverTimestamp(),
       downloads: 0,
       likes: 0,
-      status: 'pending' // pending, approved, rejected
+      status: 'pending'
     };
 
     console.log('Saving to Firestore:', pyqData);
@@ -197,10 +181,8 @@ async function handleUpload(e) {
     
     console.log('Document written with ID: ', docRef.id);
     
-    // Show success message
-    alert('PYQ uploaded successfully! It will be reviewed and made available soon.');
+    await customAlert('Upload Successful', 'PYQ uploaded successfully! It will be reviewed and made available soon.');
     
-    // Close modal and reset form
     closeUploadModal();
     
   } catch (error) {
@@ -227,21 +209,18 @@ async function handleUpload(e) {
       errorMessage += error.message;
     }
     
-    alert(errorMessage);
+    await customAlert('Upload Failed', errorMessage);
   } finally {
-    // Reset loading state
     uploadBtn.disabled = false;
     uploadText.style.display = 'block';
     uploadLoading.style.display = 'none';
   }
 }
 
-// Search function
 async function searchPYQs(filters = {}) {
   try {
     let q = collection(db, 'pyqs');
     
-    // Apply filters
     if (filters.college) {
       q = query(q, where('college', '==', filters.college));
     }
@@ -258,7 +237,6 @@ async function searchPYQs(filters = {}) {
       q = query(q, where('course', '==', filters.course));
     }
     
-    // Order by upload date
     q = query(q, orderBy('uploadDate', 'desc'));
     
     const querySnapshot = await getDocs(q);
@@ -278,7 +256,6 @@ async function searchPYQs(filters = {}) {
   }
 }
 
-// Reset form function
 function resetForm() {
   document.getElementById('uploadForm').reset();
   document.getElementById('fileText').style.display = 'block';
@@ -286,7 +263,6 @@ function resetForm() {
   document.getElementById('fileName').textContent = '';
 }
 
-// Close modal when clicking outside
 document.addEventListener('click', function(e) {
   const modal = document.getElementById('uploadModal');
   if (e.target === modal) {
@@ -294,12 +270,10 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Close modal with Escape key
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeUploadModal();
   }
 });
 
-// Export functions for use in other files
-window.searchPYQs = searchPYQs; 
+window.searchPYQs = searchPYQs;
